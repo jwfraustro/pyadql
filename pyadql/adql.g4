@@ -2,15 +2,29 @@ grammar adql;
 
 options {
 	language = Python3;
-	tokenVocab = ADQLLexer;
 }
 
-adql_language_character:
-	simple_latin_letter
-	| DIGIT
-	| sql_special_character;
+parse: query_expression EOF;
 
-// Tokens ADQL Reserved Words
+SPACES: [ \t\r\n]+ -> skip;
+
+regular_identifier:
+	SIMPLE_LATIN_LETTER (
+		DIGIT
+		| SIMPLE_LATIN_LETTER
+		| UNDERSCORE
+	)*;
+
+SIMPLE_LATIN_LETTER:
+	SIMPLE_LATIN_LOWER_CASE_LETTER
+	| SIMPLE_LATIN_UPPERCASE_LETTER;
+
+adql_language_character:
+	SIMPLE_LATIN_LETTER
+	| DIGIT
+	| SQL_SPECIAL_CHARACTER;
+
+// ADQL Reserved Words
 ABS: 'ABS';
 ACOS: 'ACOS';
 AREA: 'AREA';
@@ -49,7 +63,7 @@ TOP: 'TOP';
 TAN: 'TAN';
 TRUNCATE: 'TRUNCATE';
 
-adql_reserved_word:
+ADQL_RESERVED_WORD:
 	ABS
 	| ACOS
 	| AREA
@@ -87,6 +101,7 @@ adql_reserved_word:
 	| TAN
 	| TRUNCATE;
 
+// SQL Reserved Words
 ABSOLUTE: 'ABSOLUTE';
 ACTION: 'ACTION';
 ADD: 'ADD';
@@ -314,7 +329,7 @@ WRITE: 'WRITE';
 YEAR: 'YEAR';
 ZONE: 'ZONE';
 
-sql_reserved_word:
+SQL_RESERVED_WORD:
 	ABSOLUTE
 	| ACTION
 	| ADD
@@ -542,31 +557,7 @@ sql_reserved_word:
 	| YEAR
 	| ZONE;
 
-sql_embedded_language_character: LEFT_BRACKET | RIGHT_BRACKET;
-
-sql_special_character:
-	SPACE
-	| DOUBLE_QUOTE
-	| PERCENT
-	| AMPERSAND
-	| QUOTE
-	| LEFT_PAREN
-	| RIGHT_PAREN
-	| ASTERISK
-	| PLUS_SIGN
-	| COMMA
-	| MINUS_SIGN
-	| PERIOD
-	| SOLIDUS
-	| COLON
-	| SEMICOLON
-	| LESS_THAN_OPERATOR
-	| EQUALS_OPERATOR
-	| GREATER_THAN_OPERATOR
-	| QUESTION_MARK
-	| UNDERSCORE
-	| VERTICAL_BAR;
-
+// SQL Special Characters
 AMPERSAND: '&';
 ASTERISK: '*';
 COLON: ':';
@@ -596,13 +587,43 @@ SOLIDUS: '/';
 UNDERSCORE: '_';
 VERTICAL_BAR: '|';
 
+SQL_SPECIAL_CHARACTER:
+	SPACE
+	| DOUBLE_QUOTE
+	| PERCENT
+	| AMPERSAND
+	| QUOTE
+	| LEFT_PAREN
+	| RIGHT_PAREN
+	| ASTERISK
+	| PLUS_SIGN
+	| COMMA
+	| MINUS_SIGN
+	| PERIOD
+	| SOLIDUS
+	| COLON
+	| SEMICOLON
+	| LESS_THAN_OPERATOR
+	| EQUALS_OPERATOR
+	| GREATER_THAN_OPERATOR
+	| QUESTION_MARK
+	| UNDERSCORE
+	| VERTICAL_BAR;
+
+SQL_EMBEDDED_LANGUAGE_CHARACTER: LEFT_BRACKET | RIGHT_BRACKET;
+
 NOT_EQUALS_OPERATOR:
 	NOT_EQUALS_OPERATOR1
 	| NOT_EQUALS_OPERATOR2;
 
 DIGIT: [0-9];
 
-approximate_numeric_literal: mantissa 'E' exponent;
+E: 'E';
+
+fragment SIMPLE_LATIN_LOWER_CASE_LETTER: [a-z];
+fragment SIMPLE_LATIN_UPPERCASE_LETTER: [A-Z];
+
+approximate_numeric_literal: mantissa E exponent;
 
 area: AREA LEFT_PAREN geometry_value_expression RIGHT_PAREN;
 
@@ -704,7 +725,7 @@ delimited_identifier_part:
 delimiter_token:
 	character_string_literal
 	| delimited_identifier
-	| sql_special_character;
+	| SQL_SPECIAL_CHARACTER;
 
 derived_column: value_expression (as_clause)?;
 
@@ -781,7 +802,7 @@ joined_table:
 	qualified_join
 	| LEFT_PAREN joined_table RIGHT_PAREN;
 
-keyword: sql_reserved_word | adql_reserved_word;
+keyword: SQL_RESERVED_WORD | ADQL_RESERVED_WORD;
 
 like_predicate: match_value (NOT? LIKE) pattern;
 
@@ -814,10 +835,6 @@ minor_radius: numeric_value_expression;
 
 named_columns_join:
 	USING LEFT_PAREN join_column_list RIGHT_PAREN;
-
-newline: '\r'? '\n';
-NONDOUBLEQUOTE_CHARACTER: ~["];
-NONQUOTE_CHARACTER: ~['];
 
 not_equals_operator:
 	NOT_EQUALS_OPERATOR1
@@ -898,10 +915,6 @@ radius: numeric_value_expression;
 
 region: REGION LEFT_PAREN string_value_expression RIGHT_PAREN;
 
-regular_identifier:
-	simple_latin_letter+
-	| (DIGIT | simple_latin_letter | UNDERSCORE)+;
-
 schema_name: (catalog_name PERIOD)? unqualified_schema_name;
 
 search_condition:
@@ -912,7 +925,7 @@ select_list: ASTERISK | select_sublist (COMMA select_sublist)+;
 
 select_sublist: derived_column | qualifier PERIOD ASTERISK;
 
-separator: (comment | SPACE | newline)+;
+separator: (comment | SPACE_CHARACTER | NEWLINE)+;
 
 set_function_specification:
 	COUNT LEFT_PAREN ASTERISK RIGHT_PAREN
@@ -927,13 +940,6 @@ set_quantifier: ALL | DISTINCT;
 sign: PLUS_SIGN | MINUS_SIGN;
 
 signed_integer: sign? unsigned_integer;
-
-simple_latin_letter:
-	SIMPLE_LATIN_LOWER_CASE_LETTER
-	| SIMPLE_LATIN_UPPERCASE_LETTER;
-
-SIMPLE_LATIN_LOWER_CASE_LETTER: [a-z];
-SIMPLE_LATIN_UPPERCASE_LETTER: [A-Z];
 
 sort_key: column_name | unsigned_integer;
 
@@ -1011,3 +1017,9 @@ value_expression_primary:
 	| LEFT_PAREN value_expression RIGHT_PAREN;
 
 where_clause: WHERE search_condition?;
+
+NEWLINE: '\r'? '\n';
+SPACE_CHARACTER: ' ' | '\t';
+
+NONDOUBLEQUOTE_CHARACTER: [^'];
+NONQUOTE_CHARACTER: [^"];
