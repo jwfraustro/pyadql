@@ -555,7 +555,7 @@ PERCENT: "%"
 PERIOD: "."
 PLUS_SIGN: "+"
 QUESTION_MARK: "?"
-QUOTE: "\'"
+QUOTE: "'"
 RIGHT_BRACKET: "]"
 RIGHT_PAREN: ")"
 SEMICOLON: ";"
@@ -602,7 +602,7 @@ between_predicate: value_expression [NOT] BETWEEN value_expression AND value_exp
 
 boolean_factor: [NOT] boolean_primary
 
-boolean_primary: LEFT_PAREN search_condition RIGHT_PAREN
+boolean_primary: LEFT_PAREN search_condition RIGHT_PAREN predicate
     | predicate
 
 boolean_term: boolean_factor
