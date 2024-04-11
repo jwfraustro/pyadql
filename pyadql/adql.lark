@@ -610,7 +610,7 @@ boolean_term: boolean_factor
 
 box: BOX LEFT_PAREN coord_sys COMMA coordinates COMMA numeric_value_expression COMMA numeric_value_expression RIGHT_PAREN
 
-catalog_name: identifier
+catalog_name: _identifier
 
 centroid: CENTROID LEFT_PAREN geometry_value_expression RIGHT_PAREN
 
@@ -627,7 +627,7 @@ character_value_expression: concatenation | character_factor
 
 circle: CIRCLE LEFT_PAREN coord_sys COMMA coordinates COMMA radius RIGHT_PAREN
 
-column_name: identifier
+column_name: _identifier
 column_name_list: column_name (COMMA column_name)*
 column_reference: [qualifier PERIOD] column_name
 
@@ -657,17 +657,17 @@ coordinate1: numeric_value_expression
 coordinate2: numeric_value_expression
 coordinates: coordinate1 COMMA coordinate2
 
-correlation_name: identifier
+correlation_name: _identifier
 correlation_specification: AS correlation_name
 
 default_function_prefix: "UDF"
 
-delimited_identifier: DOUBLE_QUOTE delimited_identifier_body DOUBLE_QUOTE
+_delimited_identifier: DOUBLE_QUOTE delimited_identifier_body DOUBLE_QUOTE
 delimited_identifier_body: delimited_identifier_part*
 delimited_identifier_part: nondoublequote_character | DOUBLE_QUOTE_SYMBOL
 
 delimiter_token: character_string_literal
-    | delimited_identifier
+    | _delimited_identifier
     | SQL_SPECIAL_CHARACTER
     | NOT_EQUALS_OPERATOR
     | GREATER_THAN_OR_EQUALS_OPERATOR
@@ -712,7 +712,7 @@ grouping_column_reference_list: grouping_column_reference (COMMA grouping_column
 
 having_clause: HAVING search_condition
 
-identifier: regular_identifier | delimited_identifier
+_identifier: _regular_identifier | _delimited_identifier
 
 in_predicate: value_expression [NOT] IN in_predicate_value
 
@@ -766,7 +766,7 @@ non_predicate_geometry_function: area
     | coord2
     | distance
 
-nondelimiter_token: regular_identifier
+nondelimiter_token: _regular_identifier
     | keyword
     | unsigned_numeric_literal
 
@@ -827,7 +827,7 @@ radius: numeric_value_expression
 
 region: REGION LEFT_PAREN string_value_expression RIGHT_PAREN
 
-regular_identifier: SIMPLE_LATIN_LETTER+ (SIMPLE_LATIN_LETTER | DIGIT | UNDERSCORE)*
+_regular_identifier: /[a-zA-Z]+[a-zA-Z0-9_]*/
 
 schema_name: [catalog_name PERIOD] unqualified_schema_name
 
@@ -867,7 +867,7 @@ subquery: LEFT_PAREN query_expression RIGHT_PAREN
 table_expression: from_clause [where_clause] [group_by_clause] [having_clause] [order_by_clause]
 
 table_name: [schema_name PERIOD] unqualified_table_name
-unqualified_table_name: identifier
+unqualified_table_name: _identifier
 
 table_reference: table_name [correlation_specification]
     | derived_table correlation_specification
@@ -887,7 +887,7 @@ trig_function: ACOS LEFT_PAREN numeric_value_expression RIGHT_PAREN
     | SIN LEFT_PAREN numeric_value_expression RIGHT_PAREN
     | TAN LEFT_PAREN numeric_value_expression RIGHT_PAREN
 
-unqualified_schema_name : identifier
+unqualified_schema_name : _identifier
 
 unsigned_literal: unsigned_numeric_literal | general_literal
 
@@ -898,7 +898,7 @@ unsigned_value_specification: unsigned_literal
 
 user_defined_function: user_defined_function_name LEFT_PAREN [user_defined_function_param [COMMA user_defined_function_param]*] RIGHT_PAREN
 
-user_defined_function_name: [default_function_prefix] regular_identifier
+user_defined_function_name: [default_function_prefix] _regular_identifier
 user_defined_function_param: value_expression
 
 value_expression: numeric_value_expression
