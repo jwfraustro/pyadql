@@ -2,42 +2,42 @@ adql_language_character: SIMPLE_LATIN_LETTER
     | DIGIT
     | SQL_SPECIAL_CHARACTER
 
-ABS: "ABS"
-ACOS: "ACOS"
-AREA: "AREA"
-ASIN: "ASIN"
-ATAN: "ATAN"
-ATAN2: "ATAN2"
-BOX: "BOX"
-CEILING: "CEILING"
-CENTROID: "CENTROID"
-CIRCLE: "CIRCLE"
-CONTAINS: "CONTAINS"
-COORD1: "COORD1"
-COORD2: "COORD2"
-COORDSYS: "COORDSYS"
-COS: "COS"
-DEGREES: "DEGREES"
-DISTANCE: "DISTANCE"
-EXP: "EXP"
-FLOOR: "FLOOR"
-INTERSECTS: "INTERSECTS"
-LOG: "LOG"
-LOG10: "LOG10"
-MOD: "MOD"
-PI: "PI"
-POINT: "POINT"
-POLYGON: "POLYGON"
-POWER: "POWER"
-RADIANS: "RADIANS"
-REGION: "REGION"
-RAND: "RAND"
-ROUND: "ROUND"
-SIN: "SIN"
-SQRT: "SQRT"
-TOP: "TOP"
-TAN: "TAN"
-TRUNCATE: "TRUNCATE"
+ABS: "ABS"i
+ACOS: "ACOS"i
+AREA: "AREA"i
+ASIN: "ASIN"i
+ATAN: "ATAN"i
+ATAN2: "ATAN2"i
+BOX: "BOX"i
+CEILING: "CEILING"i
+CENTROID: "CENTROID"i
+CIRCLE: "CIRCLE"i
+CONTAINS: "CONTAINS"i
+COORD1: "COORD1"i
+COORD2: "COORD2"i
+COORDSYS: "COORDSYS"i
+COS: "COS"i
+DEGREES: "DEGREES"i
+DISTANCE: "DISTANCE"i
+EXP: "EXP"i
+FLOOR: "FLOOR"i
+INTERSECTS: "INTERSECTS"i
+LOG: "LOG"i
+LOG10: "LOG10"i
+MOD: "MOD"i
+PI: "PI"i
+POINT: "POINT"i
+POLYGON: "POLYGON"i
+POWER: "POWER"i
+RADIANS: "RADIANS"i
+REGION: "REGION"i
+RAND: "RAND"i
+ROUND: "ROUND"i
+SIN: "SIN"i
+SQRT: "SQRT"i
+TOP: "TOP"i
+TAN: "TAN"i
+TRUNCATE: "TRUNCATE"i
 
 ADQL_RESERVED_WORD: ABS
     | ACOS
@@ -79,232 +79,232 @@ ADQL_RESERVED_WORD: ABS
 SQL_EMBEDDED_LANGUAGE_CHARACTER: LEFT_BRACKET
     | RIGHT_BRACKET
 
-ABSOLUTE: "ABSOLUTE"
-ACTION: "ACTION"
-ADD: "ADD"
-ALL: "ALL"
-ALLOCATE: "ALLOCATE"
-ALTER: "ALTER"
-AND: "AND"
-ANY: "ANY"
-ARE: "ARE"
-AS: "AS"
-ASC: "ASC"
-ASSERTION: "ASSERTION"
-AT: "AT"
-AUTHORIZATION: "AUTHORIZATION"
-AVG: "AVG"
-BEGIN: "BEGIN"
-BETWEEN: "BETWEEN"
-BIT: "BIT"
-BIT_LENGTH: "BIT_LENGTH"
-BOTH: "BOTH"
-BY: "BY"
-CASCADE: "CASCADE"
-CASCADED: "CASCADED"
-CASE: "CASE"
-CAST: "CAST"
-CATALOG: "CATALOG"
-CHAR: "CHAR"
-CHARACTER: "CHARACTER"
-CHAR_LENGTH: "CHAR_LENGTH"
-CHARACTER_LENGTH: "CHARACTER_LENGTH"
-CHECK: "CHECK"
-CLOSE: "CLOSE"
-COALESCE: "COALESCE"
-COLLATE: "COLLATE"
-COLLATION: "COLLATION"
-COLUMN: "COLUMN"
-COMMIT: "COMMIT"
-CONNECT: "CONNECT"
-CONNECTION: "CONNECTION"
-CONSTRAINT: "CONSTRAINT"
-CONSTRAINTS: "CONSTRAINTS"
-CONTINUE: "CONTINUE"
-CONVERT: "CONVERT"
-CORRESPONDING: "CORRESPONDING"
-COUNT: "COUNT"
-CREATE: "CREATE"
-CROSS: "CROSS"
-CURRENT: "CURRENT"
-CURRENT_DATE: "CURRENT_DATE"
-CURRENT_TIME: "CURRENT_TIME"
-CURRENT_TIMESTAMP: "CURRENT_TIMESTAMP"
-CURRENT_USER: "CURRENT_USER"
-CURSOR: "CURSOR"
-DATE: "DATE"
-DAY: "DAY"
-DEALLOCATE: "DEALLOCATE"
-DECIMAL: "DECIMAL"
-DECLARE: "DECLARE"
-DEFAULT: "DEFAULT"
-DEFERRABLE: "DEFERRABLE"
-DEFERRED: "DEFERRED"
-DELETE: "DELETE"
-DESC: "DESC"
-DESCRIBE: "DESCRIBE"
-DESCRIPTOR: "DESCRIPTOR"
-DIAGNOSTICS: "DIAGNOSTICS"
-DISCONNECT: "DISCONNECT"
-DISTINCT: "DISTINCT"
-DOMAIN: "DOMAIN"
-DOUBLE: "DOUBLE"
-DROP: "DROP"
-ELSE: "ELSE"
-END: "END"
-END_EXEC: "END-EXEC"
-ESCAPE: "ESCAPE"
-EXCEPT: "EXCEPT"
-EXCEPTION: "EXCEPTION"
-EXEC: "EXEC"
-EXECUTE: "EXECUTE"
-EXISTS: "EXISTS"
-EXTERNAL: "EXTERNAL"
-EXTRACT: "EXTRACT"
-FALSE: "FALSE"
-FETCH: "FETCH"
-FIRST: "FIRST"
-FLOAT: "FLOAT"
-FOR: "FOR"
-FOREIGN: "FOREIGN"
-FOUND: "FOUND"
-FROM: "FROM"
-FULL: "FULL"
-GET: "GET"
-GLOBAL: "GLOBAL"
-GO: "GO"
-GOTO: "GOTO"
-GRANT: "GRANT"
-GROUP: "GROUP"
-HAVING: "HAVING"
-HOUR: "HOUR"
-IDENTITY: "IDENTITY"
-IMMEDIATE: "IMMEDIATE"
-IN: "IN"
-INDICATOR: "INDICATOR"
-INITIALLY: "INITIALLY"
-INNER: "INNER"
-INPUT: "INPUT"
-INSENSITIVE: "INSENSITIVE"
-INSERT: "INSERT"
-INT: "INT"
-INTEGER: "INTEGER"
-INTERSECT: "INTERSECT"
-INTERVAL: "INTERVAL"
-INTO: "INTO"
-IS: "IS"
-ISOLATION: "ISOLATION"
-JOIN: "JOIN"
-KEY: "KEY"
-LANGUAGE: "LANGUAGE"
-LAST: "LAST"
-LEADING: "LEADING"
-LEFT: "LEFT"
-LEVEL: "LEVEL"
-LIKE: "LIKE"
-LOCAL: "LOCAL"
-LOWER: "LOWER"
-MATCH: "MATCH"
-MAX: "MAX"
-MIN: "MIN"
-MINUTE: "MINUTE"
-MODULE: "MODULE"
-MONTH: "MONTH"
-NAMES: "NAMES"
-NATIONAL: "NATIONAL"
-NATURAL: "NATURAL"
-NCHAR: "NCHAR"
-NEXT: "NEXT"
-NO: "NO"
-NOT: "NOT"
-NULL: "NULL"
-NULLIF: "NULLIF"
-NUMERIC: "NUMERIC"
-OCTET_LENGTH: "OCTET_LENGTH"
-OF: "OF"
-ON: "ON"
-ONLY: "ONLY"
-OPEN: "OPEN"
-OPTION: "OPTION"
-OR: "OR"
-ORDER: "ORDER"
-OUTER: "OUTER"
-OUTPUT: "OUTPUT"
-OVERLAPS: "OVERLAPS"
-PAD: "PAD"
-PARTIAL: "PARTIAL"
-POSITION: "POSITION"
-PRECISION: "PRECISION"
-PREPARE: "PREPARE"
-PRESERVE: "PRESERVE"
-PRIMARY: "PRIMARY"
-PRIOR: "PRIOR"
-PRIVILEGES: "PRIVILEGES"
-PROCEDURE: "PROCEDURE"
-PUBLIC: "PUBLIC"
-READ: "READ"
-REAL: "REAL"
-REFERENCES: "REFERENCES"
-RELATIVE: "RELATIVE"
-RESTRICT: "RESTRICT"
-REVOKE: "REVOKE"
-RIGHT: "RIGHT"
-ROLLBACK: "ROLLBACK"
-ROWS: "ROWS"
-SCHEMA: "SCHEMA"
-SCROLL: "SCROLL"
-SECOND: "SECOND"
-SECTION: "SECTION"
-SELECT: "SELECT"
-SESSION: "SESSION"
-SESSION_USER: "SESSION_USER"
-SET: "SET"
-SIZE: "SIZE"
-SMALLINT: "SMALLINT"
-SOME: "SOME"
-SPACE: "SPACE"
-SQL: "SQL"
-SQLCODE: "SQLCODE"
-SQLERROR: "SQLERROR"
-SQLSTATE: "SQLSTATE"
-SUBSTRING: "SUBSTRING"
-SUM: "SUM"
-SYSTEM_USER: "SYSTEM_USER"
-TABLE: "TABLE"
-TEMPORARY: "TEMPORARY"
-THEN: "THEN"
-TIME: "TIME"
-TIMESTAMP: "TIMESTAMP"
-TIMEZONE_HOUR: "TIMEZONE_HOUR"
-TIMEZONE_MINUTE: "TIMEZONE_MINUTE"
-TO: "TO"
-TRAILING: "TRAILING"
-TRANSACTION: "TRANSACTION"
-TRANSLATE: "TRANSLATE"
-TRANSLATION: "TRANSLATION"
-TRIM: "TRIM"
-TRUE: "TRUE"
-UNION: "UNION"
-UNIQUE: "UNIQUE"
-UNKNOWN: "UNKNOWN"
-UPDATE: "UPDATE"
-UPPER: "UPPER"
-USAGE: "USAGE"
-USER: "USER"
-USING: "USING"
-VALUE: "VALUE"
-VALUES: "VALUES"
-VARCHAR: "VARCHAR"
-VARYING: "VARYING"
-VIEW: "VIEW"
-WHEN: "WHEN"
-WHENEVER: "WHENEVER"
-WHERE: "WHERE"
-WITH: "WITH"
-WORK: "WORK"
-WRITE: "WRITE"
-YEAR: "YEAR"
-ZONE: "ZONE"
+ABSOLUTE: "ABSOLUTE"i
+ACTION: "ACTION"i
+ADD: "ADD"i
+ALL: "ALL"i
+ALLOCATE: "ALLOCATE"i
+ALTER: "ALTER"i
+AND: "AND"i
+ANY: "ANY"i
+ARE: "ARE"i
+AS: "AS"i
+ASC: "ASC"i
+ASSERTION: "ASSERTION"i
+AT: "AT"i
+AUTHORIZATION: "AUTHORIZATION"i
+AVG: "AVG"i
+BEGIN: "BEGIN"i
+BETWEEN: "BETWEEN"i
+BIT: "BIT"i
+BIT_LENGTH: "BIT_LENGTH"i
+BOTH: "BOTH"i
+BY: "BY"i
+CASCADE: "CASCADE"i
+CASCADED: "CASCADED"i
+CASE: "CASE"i
+CAST: "CAST"i
+CATALOG: "CATALOG"i
+CHAR: "CHAR"i
+CHARACTER: "CHARACTER"i
+CHAR_LENGTH: "CHAR_LENGTH"i
+CHARACTER_LENGTH: "CHARACTER_LENGTH"i
+CHECK: "CHECK"i
+CLOSE: "CLOSE"i
+COALESCE: "COALESCE"i
+COLLATE: "COLLATE"i
+COLLATION: "COLLATION"i
+COLUMN: "COLUMN"i
+COMMIT: "COMMIT"i
+CONNECT: "CONNECT"i
+CONNECTION: "CONNECTION"i
+CONSTRAINT: "CONSTRAINT"i
+CONSTRAINTS: "CONSTRAINTS"i
+CONTINUE: "CONTINUE"i
+CONVERT: "CONVERT"i
+CORRESPONDING: "CORRESPONDING"i
+COUNT: "COUNT"i
+CREATE: "CREATE"i
+CROSS: "CROSS"i
+CURRENT: "CURRENT"i
+CURRENT_DATE: "CURRENT_DATE"i
+CURRENT_TIME: "CURRENT_TIME"i
+CURRENT_TIMESTAMP: "CURRENT_TIMESTAMP"i
+CURRENT_USER: "CURRENT_USER"i
+CURSOR: "CURSOR"i
+DATE: "DATE"i
+DAY: "DAY"i
+DEALLOCATE: "DEALLOCATE"i
+DECIMAL: "DECIMAL"i
+DECLARE: "DECLARE"i
+DEFAULT: "DEFAULT"i
+DEFERRABLE: "DEFERRABLE"i
+DEFERRED: "DEFERRED"i
+DELETE: "DELETE"i
+DESC: "DESC"i
+DESCRIBE: "DESCRIBE"i
+DESCRIPTOR: "DESCRIPTOR"i
+DIAGNOSTICS: "DIAGNOSTICS"i
+DISCONNECT: "DISCONNECT"i
+DISTINCT: "DISTINCT"i
+DOMAIN: "DOMAIN"i
+DOUBLE: "DOUBLE"i
+DROP: "DROP"i
+ELSE: "ELSE"i
+END: "END"i
+END_EXEC: "END-EXEC"i
+ESCAPE: "ESCAPE"i
+EXCEPT: "EXCEPT"i
+EXCEPTION: "EXCEPTION"i
+EXEC: "EXEC"i
+EXECUTE: "EXECUTE"i
+EXISTS: "EXISTS"i
+EXTERNAL: "EXTERNAL"i
+EXTRACT: "EXTRACT"i
+FALSE: "FALSE"i
+FETCH: "FETCH"i
+FIRST: "FIRST"i
+FLOAT: "FLOAT"i
+FOR: "FOR"i
+FOREIGN: "FOREIGN"i
+FOUND: "FOUND"i
+FROM: "FROM"i
+FULL: "FULL"i
+GET: "GET"i
+GLOBAL: "GLOBAL"i
+GO: "GO"i
+GOTO: "GOTO"i
+GRANT: "GRANT"i
+GROUP: "GROUP"i
+HAVING: "HAVING"i
+HOUR: "HOUR"i
+IDENTITY: "IDENTITY"i
+IMMEDIATE: "IMMEDIATE"i
+IN: "IN"i
+INDICATOR: "INDICATOR"i
+INITIALLY: "INITIALLY"i
+INNER: "INNER"i
+INPUT: "INPUT"i
+INSENSITIVE: "INSENSITIVE"i
+INSERT: "INSERT"i
+INT: "INT"i
+INTEGER: "INTEGER"i
+INTERSECT: "INTERSECT"i
+INTERVAL: "INTERVAL"i
+INTO: "INTO"i
+IS: "IS"i
+ISOLATION: "ISOLATION"i
+JOIN: "JOIN"i
+KEY: "KEY"i
+LANGUAGE: "LANGUAGE"i
+LAST: "LAST"i
+LEADING: "LEADING"i
+LEFT: "LEFT"i
+LEVEL: "LEVEL"i
+LIKE: "LIKE"i
+LOCAL: "LOCAL"i
+LOWER: "LOWER"i
+MATCH: "MATCH"i
+MAX: "MAX"i
+MIN: "MIN"i
+MINUTE: "MINUTE"i
+MODULE: "MODULE"i
+MONTH: "MONTH"i
+NAMES: "NAMES"i
+NATIONAL: "NATIONAL"i
+NATURAL: "NATURAL"i
+NCHAR: "NCHAR"i
+NEXT: "NEXT"i
+NO: "NO"i
+NOT: "NOT"i
+NULL: "NULL"i
+NULLIF: "NULLIF"i
+NUMERIC: "NUMERIC"i
+OCTET_LENGTH: "OCTET_LENGTH"i
+OF: "OF"i
+ON: "ON"i
+ONLY: "ONLY"i
+OPEN: "OPEN"i
+OPTION: "OPTION"i
+OR: "OR"i
+ORDER: "ORDER"i
+OUTER: "OUTER"i
+OUTPUT: "OUTPUT"i
+OVERLAPS: "OVERLAPS"i
+PAD: "PAD"i
+PARTIAL: "PARTIAL"i
+POSITION: "POSITION"i
+PRECISION: "PRECISION"i
+PREPARE: "PREPARE"i
+PRESERVE: "PRESERVE"i
+PRIMARY: "PRIMARY"i
+PRIOR: "PRIOR"i
+PRIVILEGES: "PRIVILEGES"i
+PROCEDURE: "PROCEDURE"i
+PUBLIC: "PUBLIC"i
+READ: "READ"i
+REAL: "REAL"i
+REFERENCES: "REFERENCES"i
+RELATIVE: "RELATIVE"i
+RESTRICT: "RESTRICT"i
+REVOKE: "REVOKE"i
+RIGHT: "RIGHT"i
+ROLLBACK: "ROLLBACK"i
+ROWS: "ROWS"i
+SCHEMA: "SCHEMA"i
+SCROLL: "SCROLL"i
+SECOND: "SECOND"i
+SECTION: "SECTION"i
+SELECT: "SELECT"i
+SESSION: "SESSION"i
+SESSION_USER: "SESSION_USER"i
+SET: "SET"i
+SIZE: "SIZE"i
+SMALLINT: "SMALLINT"i
+SOME: "SOME"i
+SPACE: "SPACE"i
+SQL: "SQL"i
+SQLCODE: "SQLCODE"i
+SQLERROR: "SQLERROR"i
+SQLSTATE: "SQLSTATE"i
+SUBSTRING: "SUBSTRING"i
+SUM: "SUM"i
+SYSTEM_USER: "SYSTEM_USER"i
+TABLE: "TABLE"i
+TEMPORARY: "TEMPORARY"i
+THEN: "THEN"i
+TIME: "TIME"i
+TIMESTAMP: "TIMESTAMP"i
+TIMEZONE_HOUR: "TIMEZONE_HOUR"i
+TIMEZONE_MINUTE: "TIMEZONE_MINUTE"i
+TO: "TO"i
+TRAILING: "TRAILING"i
+TRANSACTION: "TRANSACTION"i
+TRANSLATE: "TRANSLATE"i
+TRANSLATION: "TRANSLATION"i
+TRIM: "TRIM"i
+TRUE: "TRUE"i
+UNION: "UNION"i
+UNIQUE: "UNIQUE"i
+UNKNOWN: "UNKNOWN"i
+UPDATE: "UPDATE"i
+UPPER: "UPPER"i
+USAGE: "USAGE"i
+USER: "USER"i
+USING: "USING"i
+VALUE: "VALUE"i
+VALUES: "VALUES"i
+VARCHAR: "VARCHAR"i
+VARYING: "VARYING"i
+VIEW: "VIEW"i
+WHEN: "WHEN"i
+WHENEVER: "WHENEVER"i
+WHERE: "WHERE"i
+WITH: "WITH"i
+WORK: "WORK"i
+WRITE: "WRITE"i
+YEAR: "YEAR"i
+ZONE: "ZONE"i
 
 SQL_RESERVED_WORD : ABSOLUTE
     | ACTION
@@ -598,15 +598,15 @@ area: AREA "(" geometry_value_expression ")"
 
 as_clause: "AS" column_name
 
-between_predicate: value_expression [NOT] BETWEEN value_expression AND value_expression
+between_predicate: _value_expression [NOT] BETWEEN _value_expression AND _value_expression
 
-boolean_factor: [NOT] boolean_primary
+_boolean_factor: [NOT] _boolean_primary
 
-boolean_primary: "(" search_condition ")"
-    | predicate
+_boolean_primary: "(" search_condition ")"
+    | _predicate
 
-boolean_term: boolean_factor
-    | boolean_term AND boolean_factor
+_boolean_term: _boolean_factor
+    | _boolean_term AND _boolean_factor
 
 box: BOX "(" coord_sys "," coordinates "," numeric_value_expression "," numeric_value_expression ")"
 
@@ -614,22 +614,24 @@ catalog_name: _identifier
 
 centroid: CENTROID "(" geometry_value_expression ")"
 
-character_factor : character_primary
+_character_factor : _character_primary
 
-character_primary: value_expression_primary
+_character_primary:
     | string_value_function
+    | _value_expression_primary
+    | _general_literal
 
-character_representation: nonquote_character | quote_symbol
+_character_representation: /[^"\'\']+/
 
-character_string_literal: QUOTE (character_representation)* QUOTE (separator* QUOTE (character_representation)* QUOTE)*
+_character_string_literal: "'" (_character_representation)* "'" (separator* "'" (_character_representation)* "'")*
 
-character_value_expression: concatenation | character_factor
+_character_value_expression: concatenation | _character_factor
 
 circle: CIRCLE "(" coord_sys "," coordinates "," radius ")"
 
 column_name: _identifier
 column_name_list: column_name ("," column_name)*
-column_reference: [qualifier "." ] column_name
+column_reference: [_qualifier "." ] column_name
 
 comment: comment_introducer (comment_character)* NEWLINE
 comment_character: nonquote_character | QUOTE
@@ -642,15 +644,15 @@ COMP_OP: EQUALS_OPERATOR
     | LESS_THAN_OR_EQUALS_OPERATOR
     | GREATER_THAN_OR_EQUALS_OPERATOR
 
-comparison_predicate: value_expression COMP_OP value_expression
+comparison_predicate: _value_expression COMP_OP _value_expression
 
-concatenation: character_value_expression CONCATENATION_OPERATOR character_factor
+concatenation: _character_value_expression CONCATENATION_OPERATOR _character_factor
 
 contains: CONTAINS "(" geometry_value_expression "," geometry_value_expression ")"
 
 coord1: COORD1 "(" geometry_value_expression ")"
 coord2: COORD2 "(" geometry_value_expression ")"
-coord_sys: string_value_expression
+coord_sys: _string_value_expression
 coord_value: point | column_reference
 
 coordinate1: numeric_value_expression
@@ -662,11 +664,11 @@ correlation_specification: "AS" correlation_name
 
 default_function_prefix: "UDF"
 
-_delimited_identifier: DOUBLE_QUOTE _delimited_identifier_body DOUBLE_QUOTE
+_delimited_identifier: "\"" _delimited_identifier_body "\""
 _delimited_identifier_body: _delimited_identifier_part*
 _delimited_identifier_part: /[^"]+/ | "\"\""
 
-delimiter_token: character_string_literal
+delimiter_token: _character_string_literal
     | _delimited_identifier
     | SQL_SPECIAL_CHARACTER
     | NOT_EQUALS_OPERATOR
@@ -677,7 +679,7 @@ delimiter_token: character_string_literal
     | LEFT_BRACKET
     | RIGHT_BRACKET
 
-derived_column: value_expression [as_clause]
+derived_column: _value_expression [as_clause]
 derived_table: table_subquery
 
 distance: DISTANCE "(" coord_value "," coord_value ")"
@@ -693,13 +695,13 @@ extract_coordsys: COORDSYS "(" geometry_value_expression ")"
 
 factor: [SIGN] numeric_primary
 
-from_clause: FROM table_reference ("," table_reference)*
+from_clause: "FROM"i table_reference ("," table_reference)*
 
-general_literal: character_string_literal
+_general_literal: _character_string_literal
 
-general_set_function: SET_FUNCTION_TYPE "(" [SET_QUANTIFIER] value_expression ")"
+general_set_function: SET_FUNCTION_TYPE "(" [SET_QUANTIFIER] _value_expression ")"
 
-geometry_value_expression: value_expression_primary | geometry_value_function
+geometry_value_expression: _value_expression_primary | geometry_value_function
 geometry_value_function: box
     | centroid
     | circle
@@ -715,12 +717,12 @@ having_clause: HAVING search_condition
 
 _identifier: _regular_identifier | _delimited_identifier
 
-in_predicate: value_expression [NOT] IN in_predicate_value
+in_predicate: _value_expression [NOT] IN in_predicate_value
 
 in_predicate_value: table_subquery
     | "(" in_value_list ")"
 
-in_value_list: value_expression ("," value_expression)*
+in_value_list: _value_expression ("," _value_expression)*
 
 intersects: INTERSECTS "(" geometry_value_expression "," geometry_value_expression ")"
 
@@ -736,7 +738,7 @@ joined_table: qualified_join | "(" joined_table ")"
 
 keyword: SQL_RESERVED_WORD | ADQL_RESERVED_WORD
 
-like_predicate: character_value_expression [NOT] LIKE pattern
+like_predicate: _character_value_expression [NOT] LIKE pattern
 
 mantissa: exact_numeric_literal
 
@@ -780,7 +782,7 @@ null_predicate: column_reference IS [NOT] NULL
 numeric_geometry_function: predicate_geometry_function
     | non_predicate_geometry_function
 
-numeric_primary: value_expression_primary
+numeric_primary: _value_expression_primary
     | numeric_value_function
 
 numeric_value_expression: term
@@ -797,13 +799,13 @@ ORDERING_SPECIFICATION: ASC | DESC
 
 OUTER_JOIN_TYPE : LEFT | RIGHT | FULL
 
-pattern: character_value_expression
+pattern: _character_value_expression
 
 point: POINT "(" coord_sys "," coordinates ")"
 
 polygon: POLYGON "(" coord_sys "," coordinates "," coordinates ("," coordinates)* ")"
 
-predicate: comparison_predicate
+_predicate: comparison_predicate
     | between_predicate
     | in_predicate
     | like_predicate
@@ -814,31 +816,31 @@ predicate_geometry_function: contains | intersects
 
 qualified_join: table_reference [NATURAL] [join_type] JOIN table_reference [join_specification]
 
-qualifier: table_name | correlation_name
+_qualifier: table_name | correlation_name
 
 query_expression: query_specification
     | joined_table
 
-query_specification: SELECT [SET_QUANTIFIER] [set_limit] select_list table_expression
+query_specification: "SELECT"i [SET_QUANTIFIER] [set_limit] select_list table_expression
 
 quote_symbol: QUOTE QUOTE
 
 radius: numeric_value_expression
 
-region: REGION "(" string_value_expression ")"
+region: REGION "(" _string_value_expression ")"
 
 _regular_identifier: /[a-zA-Z]+[a-zA-Z0-9_]*/
 
 schema_name: [catalog_name "." ] unqualified_schema_name
 
-search_condition: boolean_term
-    | search_condition OR boolean_term
+search_condition: _boolean_term
+    | search_condition OR _boolean_term
 
 select_list: ASTERISK
-    | select_sublist ("," select_sublist)*
+    | _select_sublist ("," _select_sublist)*
 
-select_sublist: derived_column
-    | qualifier "."  ASTERISK
+_select_sublist: derived_column
+    | _qualifier "."  ASTERISK
 
 separator: (comment | " " | NEWLINE)*
 
@@ -847,7 +849,7 @@ set_function_specification: COUNT "(" ASTERISK ")"
 
 SET_FUNCTION_TYPE: AVG | MAX | MIN | SUM | COUNT
 
-set_limit: TOP UNSIGNED_INTEGER
+set_limit: "TOP"i UNSIGNED_INTEGER
 
 SET_QUANTIFIER: ALL | DISTINCT
 
@@ -859,7 +861,7 @@ sort_specification: sort_key [ORDERING_SPECIFICATION]
 sort_specification_list: sort_specification ("," sort_specification)*
 
 string_geometry_function: extract_coordsys
-string_value_expression: character_value_expression
+_string_value_expression: _character_value_expression
 string_value_function: string_geometry_function | user_defined_function
 
 subquery: "(" query_expression ")"
@@ -889,7 +891,7 @@ trig_function: ACOS "(" numeric_value_expression ")"
 
 unqualified_schema_name : _identifier
 
-unsigned_literal: unsigned_numeric_literal | general_literal
+unsigned_literal: unsigned_numeric_literal
 
 unsigned_numeric_literal: exact_numeric_literal
     | approximate_numeric_literal
@@ -899,18 +901,18 @@ unsigned_value_specification: unsigned_literal
 user_defined_function: user_defined_function_name "(" [user_defined_function_param ["," user_defined_function_param]*] ")"
 
 user_defined_function_name: [default_function_prefix] _regular_identifier
-user_defined_function_param: value_expression
+user_defined_function_param: _value_expression
 
-value_expression: numeric_value_expression
-    | string_value_expression
+_value_expression: _string_value_expression
+    | numeric_value_expression
     | geometry_value_expression
 
-value_expression_primary: unsigned_value_specification
+_value_expression_primary: unsigned_value_specification
     | column_reference
     | set_function_specification
-    | "(" value_expression ")"
+    | "(" _value_expression ")"
 
-where_clause: WHERE search_condition
+where_clause: "WHERE"i search_condition
 
 %import common.WS
 %import common.LETTER -> SIMPLE_LATIN_LETTER
