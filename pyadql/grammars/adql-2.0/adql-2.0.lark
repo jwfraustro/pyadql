@@ -903,9 +903,10 @@ user_defined_function: user_defined_function_name "(" [user_defined_function_par
 user_defined_function_name: [default_function_prefix] _regular_identifier
 user_defined_function_param: _value_expression
 
-_value_expression: _string_value_expression
+_value_expression:
     | numeric_value_expression
     | geometry_value_expression
+    | _string_value_expression
 
 _value_expression_primary: unsigned_value_specification
     | column_reference
