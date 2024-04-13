@@ -594,7 +594,7 @@ SQL_SPECIAL_CHARACTER: AMPERSAND
 
 approximate_numeric_literal: mantissa EXPONENT
 
-area: AREA "(" geometry_value_expression ")"
+area: AREA "(" _geometry_value_expression ")"
 
 as_clause: "AS" column_name
 
@@ -608,11 +608,11 @@ _boolean_primary: "(" search_condition ")"
 _boolean_term: _boolean_factor
     | _boolean_term AND _boolean_factor
 
-box: BOX "(" coord_sys "," coordinates "," numeric_value_expression "," numeric_value_expression ")"
+box: BOX "(" coord_sys "," coordinates "," _numeric_value_expression "," _numeric_value_expression ")"
 
 catalog_name: _identifier
 
-centroid: CENTROID "(" geometry_value_expression ")"
+centroid: CENTROID "(" _geometry_value_expression ")"
 
 _character_factor : _character_primary
 
@@ -648,15 +648,15 @@ comparison_predicate: _value_expression COMP_OP _value_expression
 
 concatenation: _character_value_expression CONCATENATION_OPERATOR _character_factor
 
-contains: CONTAINS "(" geometry_value_expression "," geometry_value_expression ")"
+contains: CONTAINS "(" _geometry_value_expression "," _geometry_value_expression ")"
 
-coord1: COORD1 "(" geometry_value_expression ")"
-coord2: COORD2 "(" geometry_value_expression ")"
+coord1: COORD1 "(" _geometry_value_expression ")"
+coord2: COORD2 "(" _geometry_value_expression ")"
 coord_sys: _string_value_expression
 coord_value: point | column_reference
 
-coordinate1: numeric_value_expression
-coordinate2: numeric_value_expression
+coordinate1: _numeric_value_expression
+coordinate2: _numeric_value_expression
 coordinates: coordinate1 "," coordinate2
 
 correlation_name: _identifier
@@ -686,14 +686,14 @@ distance: DISTANCE "(" coord_value "," coord_value ")"
 
 DOUBLE_QUOTE_SYMBOL: DOUBLE_QUOTE DOUBLE_QUOTE
 
-exact_numeric_literal: UNSIGNED_INTEGER ["."  [UNSIGNED_INTEGER]]
+_exact_numeric_literal: UNSIGNED_INTEGER ["."  [UNSIGNED_INTEGER]]
     | "."  UNSIGNED_INTEGER
 
 exists_predicate: EXISTS table_subquery
 
-extract_coordsys: COORDSYS "(" geometry_value_expression ")"
+extract_coordsys: COORDSYS "(" _geometry_value_expression ")"
 
-factor: [SIGN] numeric_primary
+_factor: [SIGN] _numeric_primary
 
 from_clause: "FROM"i table_reference ("," table_reference)*
 
@@ -701,8 +701,8 @@ _general_literal: _character_string_literal
 
 general_set_function: SET_FUNCTION_TYPE "(" [SET_QUANTIFIER] _value_expression ")"
 
-geometry_value_expression: _value_expression_primary | geometry_value_function
-geometry_value_function: box
+_geometry_value_expression: _value_expression_primary | _geometry_value_function
+_geometry_value_function: box
     | centroid
     | circle
     | point
@@ -724,7 +724,7 @@ in_predicate_value: table_subquery
 
 in_value_list: _value_expression ("," _value_expression)*
 
-intersects: INTERSECTS "(" geometry_value_expression "," geometry_value_expression ")"
+intersects: INTERSECTS "(" _geometry_value_expression "," _geometry_value_expression ")"
 
 join_column_list: column_name_list
 
@@ -740,26 +740,26 @@ keyword: SQL_RESERVED_WORD | ADQL_RESERVED_WORD
 
 like_predicate: _character_value_expression [NOT] LIKE pattern
 
-mantissa: exact_numeric_literal
+mantissa: _exact_numeric_literal
 
 
-math_function: ABS "(" numeric_value_expression ")"
-    | CEILING "(" numeric_value_expression ")"
-    | DEGREES "(" numeric_value_expression ")"
-    | EXP "(" numeric_value_expression ")"
-    | FLOOR "(" numeric_value_expression ")"
-    | LOG "(" numeric_value_expression ")"
-    | LOG10 "(" numeric_value_expression ")"
-    | MOD "(" numeric_value_expression "," numeric_value_expression ")"
+math_function: ABS "(" _numeric_value_expression ")"
+    | CEILING "(" _numeric_value_expression ")"
+    | DEGREES "(" _numeric_value_expression ")"
+    | EXP "(" _numeric_value_expression ")"
+    | FLOOR "(" _numeric_value_expression ")"
+    | LOG "(" _numeric_value_expression ")"
+    | LOG10 "(" _numeric_value_expression ")"
+    | MOD "(" _numeric_value_expression "," _numeric_value_expression ")"
     | PI "(" ")"
-    | POWER "(" numeric_value_expression "," numeric_value_expression ")"
-    | RADIANS "(" numeric_value_expression ")"
-    | RAND "(" [numeric_value_expression] ")"
-    | ROUND "(" numeric_value_expression ["," SIGNED_INTEGER] ")"
-    | SQRT "(" numeric_value_expression ")"
-    | TRUNCATE "(" numeric_value_expression ["," SIGNED_INTEGER] ")"
+    | POWER "(" _numeric_value_expression "," _numeric_value_expression ")"
+    | RADIANS "(" _numeric_value_expression ")"
+    | RAND "(" [_numeric_value_expression] ")"
+    | ROUND "(" _numeric_value_expression ["," SIGNED_INTEGER] ")"
+    | SQRT "(" _numeric_value_expression ")"
+    | TRUNCATE "(" _numeric_value_expression ["," SIGNED_INTEGER] ")"
 
-minor_radius: numeric_value_expression
+minor_radius: _numeric_value_expression
 
 named_columns_join: USING "(" join_column_list ")"
 
@@ -770,7 +770,7 @@ non_predicate_geometry_function: area
 
 nondelimiter_token: _regular_identifier
     | keyword
-    | unsigned_numeric_literal
+    | _unsigned_numeric_literal
 
 _nondoublequote_character: /[^"]/
 nonquote_character: /[^']/
@@ -782,12 +782,12 @@ null_predicate: column_reference IS [NOT] NULL
 numeric_geometry_function: predicate_geometry_function
     | non_predicate_geometry_function
 
-numeric_primary: _value_expression_primary
+_numeric_primary: _value_expression_primary
     | numeric_value_function
 
-numeric_value_expression: term
-    | numeric_value_expression PLUS_SIGN term
-    | numeric_value_expression MINUS_SIGN term
+_numeric_value_expression: _term
+    | _numeric_value_expression PLUS_SIGN _term
+    | _numeric_value_expression MINUS_SIGN _term
 
 numeric_value_function: trig_function
     | math_function
@@ -825,7 +825,7 @@ query_specification: "SELECT"i [SET_QUANTIFIER] [set_limit] select_list table_ex
 
 quote_symbol: QUOTE QUOTE
 
-radius: numeric_value_expression
+radius: _numeric_value_expression
 
 region: REGION "(" _string_value_expression ")"
 
@@ -877,26 +877,26 @@ unqualified_table_name: _identifier
 
 table_subquery: subquery
 
-term: factor
-    | term ASTERISK factor
-    | term SOLIDUS factor
+_term: _factor
+    | _term ASTERISK _factor
+    | _term SOLIDUS _factor
 
-trig_function: ACOS "(" numeric_value_expression ")"
-    | ASIN "(" numeric_value_expression ")"
-    | ATAN "(" numeric_value_expression ")"
-    | ATAN2 "(" numeric_value_expression "," numeric_value_expression ")"
-    | COS "(" numeric_value_expression ")"
-    | SIN "(" numeric_value_expression ")"
-    | TAN "(" numeric_value_expression ")"
+trig_function: ACOS "(" _numeric_value_expression ")"
+    | ASIN "(" _numeric_value_expression ")"
+    | ATAN "(" _numeric_value_expression ")"
+    | ATAN2 "(" _numeric_value_expression "," _numeric_value_expression ")"
+    | COS "(" _numeric_value_expression ")"
+    | SIN "(" _numeric_value_expression ")"
+    | TAN "(" _numeric_value_expression ")"
 
 unqualified_schema_name : _identifier
 
-unsigned_literal: unsigned_numeric_literal
+_unsigned_literal: _unsigned_numeric_literal
 
-unsigned_numeric_literal: exact_numeric_literal
+_unsigned_numeric_literal: _exact_numeric_literal
     | approximate_numeric_literal
 
-unsigned_value_specification: unsigned_literal
+_unsigned_value_specification: _unsigned_literal
 
 user_defined_function: user_defined_function_name "(" [user_defined_function_param ["," user_defined_function_param]*] ")"
 
@@ -904,11 +904,11 @@ user_defined_function_name: [default_function_prefix] _regular_identifier
 user_defined_function_param: _value_expression
 
 _value_expression:
-    | numeric_value_expression
-    | geometry_value_expression
+    | _numeric_value_expression
+    | _geometry_value_expression
     | _string_value_expression
 
-_value_expression_primary: unsigned_value_specification
+_value_expression_primary: _unsigned_value_specification
     | column_reference
     | set_function_specification
     | "(" _value_expression ")"
