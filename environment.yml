@@ -1,8 +1,10 @@
-name: pyadql
+name: "pyadql"
 channels:
   - defaults
   - conda-forge
 dependencies:
-  - python=3.10
+  - python>=3.10
   - pip
-  - pip-tools
+  - wheel
+  - pip:
+    - pip-tools
