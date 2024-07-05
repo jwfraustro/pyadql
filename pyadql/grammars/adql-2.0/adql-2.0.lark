@@ -662,7 +662,7 @@ coordinates: coordinate1 "," coordinate2
 correlation_name: _identifier
 correlation_specification: "AS" correlation_name
 
-default_function_prefix: "UDF"
+default_function_prefix: "UDF_"i
 
 _delimited_identifier: "\"" _delimited_identifier_body "\""
 _delimited_identifier_body: _delimited_identifier_part*
@@ -831,7 +831,7 @@ region: REGION "(" _string_value_expression ")"
 
 _regular_identifier: /[a-zA-Z]+[a-zA-Z0-9_]*/
 
-schema_name: [catalog_name "." ] unqualified_schema_name
+schema_name: [catalog_name "." ] _unqualified_schema_name
 
 search_condition: _boolean_term
     | search_condition OR _boolean_term
@@ -871,7 +871,7 @@ table_expression: from_clause [where_clause] [group_by_clause] [having_clause] [
 table_name: [schema_name "." ] _identifier
 unqualified_table_name: _identifier
 
-?table_reference: table_name [correlation_specification]
+table_reference: table_name [correlation_specification]
     | derived_table correlation_specification
     | joined_table
 
@@ -889,7 +889,7 @@ trig_function: ACOS "(" _numeric_value_expression ")"
     | SIN "(" _numeric_value_expression ")"
     | TAN "(" _numeric_value_expression ")"
 
-unqualified_schema_name : _identifier
+_unqualified_schema_name : _identifier
 
 _unsigned_literal: _unsigned_numeric_literal
 

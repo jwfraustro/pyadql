@@ -7,7 +7,7 @@ query2 = """SELECT ra AS right_ascension, dec AS declination FROM MyTable"""
 
 # Geometry Functions
 query3 = """SELECT ra, dec FROM MyTable
-WHERE CONTAINS(POINT('ICRS', ra, dec), CIRCLE('ICRS', 180, 0, 1))"""
+WHERE 1 = CONTAINS(POINT(25.0,-19.5), CIRCLE(25.4,-20.0,10.0))"""
 
 # Combining Functions
 query4 = """SELECT ra, dec FROM MyTable
