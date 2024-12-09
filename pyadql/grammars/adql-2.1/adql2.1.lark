@@ -6,88 +6,88 @@ query_specification: with_clause? query_expression
 
 // ============================ Top level query parts
 
-with_clause: "WITH" _opt_space with_query _opt_space ("," _opt_space with_query)*
+with_clause: "WITH" with_query ("," with_query)*
 
-with_query: identifier REQ_SPACE as _opt_space "(" _opt_space query_expression _opt_space ")"
+with_query: identifier as "(" query_expression ")"
 
-query_expression: select_query (_opt_space set_operator _opt_space set_query_expression)*
+query_expression: select_query (set_operator set_query_expression)*
 
-set_operator: ("EXCEPT" | "INTERSECT" | "UNION") _a (REQ_SPACE "ALL" _a)?
+set_operator: ("EXCEPT" | "INTERSECT" | "UNION") _a ("ALL" _a)?
 
 set_query_expression: query_expression
-    | "(" _opt_space query_expression _opt_space ")"
+    | "(" query_expression ")"
 
 // Select clause
 
-select_query: _opt_space "SELECT" (REQ_SPACE set_quantifier)? (_opt_space set_limit)? _opt_space select_list _opt_space table_expression
+select_query: "SELECT" (set_quantifier)? (set_limit)? select_list table_expression
 
 set_quantifier: ("DISTINCT" | "ALL") _a
 
-set_limit: "TOP" REQ_SPACE UNSIGNED_INTEGER
+set_limit: "TOP" UNSIGNED_INTEGER
 
 // ================================= Select lists and their items
 select_list: "*"
-    | select_sublist (_opt_space "," _opt_space select_sublist)*
+    | select_sublist ("," select_sublist)*
 
-select_sublist: table_name _opt_space "." _opt_space "*"
+select_sublist: table_name "." "*"
     | derived_column
 
-derived_column: value_expression _opt_space as_clause?
+derived_column: value_expression as_clause?
 
 // Table expressions (FROM clause: tables, join, etc.)
 
-table_expression: from_clause (_opt_space where_clause)? (_opt_space group_by_clause)? (_opt_space order_by_clause)? (_opt_space offset_clause)?
+table_expression: from_clause (where_clause)? (group_by_clause)? (order_by_clause)? (offset_clause)?
 
-from_clause: "FROM" REQ_SPACE from_list
+from_clause: "FROM" from_list
 
-from_list: table_reference (_opt_space "," _opt_space table_reference)*
+from_list: table_reference ("," table_reference)*
 
 // joining correlation_specification and as_clause
 
-as_clause: "AS"? _opt_space identifier
+as_clause: "AS"? identifier
 
 table_reference: joined_table
-    | table_name _opt_space as_clause?
-    | subquery _opt_space as_clause?
+    | table_name (SPACE as_clause)?
+    | subquery (SPACE  as_clause)?
 
 // JOIN clauses and related elements
 
 joined_table: qualified_join
     | sub_join
 
-sub_join: "(" _opt_space joined_table _opt_space ")"
+sub_join: "(" joined_table ")"
 
 join_opener: sub_join
-    | table_name _opt_space as_clause?
-    | subquery _opt_space as_clause?
+    | table_name as_clause?
+    | subquery as_clause?
 
-qualified_join: join_opener _opt_space join_clause
+qualified_join: join_opener join_clause
 
-subquery: "(" _opt_space query_expression _opt_space ")"
+subquery: "(" query_expression ")"
 
-join_clause: join_method? _opt_space join _opt_space table_reference (_opt_space join_specification)? (_opt_space (sub_join | join_clause))*
+join_clause: join_method? join table_reference (join_specification)? ((sub_join | join_clause))*
 
 join_type: ("INNER"
-    | (outer_join_type _opt_space)? "OUTER") _a
+    | (outer_join_type)? "OUTER") _a
 
 outer_join_type: ("LEFT" | "RIGHT" | "FULL") _a
 
-join_method: natural? _opt_space (join_type)?
+join_method: natural? (join_type)?
 
 join_specification: join_condition
     | named_columns_join
 
-join_condition: on _opt_space search_condition
+join_condition: on search_condition
 
-named_columns_join: "USING" _opt_space "(" _opt_space identifier (_opt_space "," _opt_space identifier)* _opt_space ")"
+named_columns_join: "USING" "(" identifier ("," identifier)* ")"
 
 // WHERE clause
 
-where_clause: where _opt_space search_condition
+where_clause: where search_condition
 
-search_condition: boolean_term _opt_space (_opt_space or _opt_space boolean_term)*
+search_condition: boolean_term (or boolean_term)*
 
-boolean_term: boolean_factor _opt_space (_opt_space and _opt_space boolean_factor)*
+boolean_term: boolean_factor (and boolean_factor)*
 
 predicate: comparison_predicate
     | between_predicate
@@ -96,34 +96,34 @@ predicate: comparison_predicate
     | null_predicate
     | exists_predicate
 
-boolean_factor: not? _opt_space boolean_primary
+boolean_factor: not? boolean_primary
 
-boolean_primary: "(" _opt_space search_condition _opt_space ")"
+boolean_primary: "(" search_condition ")"
     | predicate
 
-null_predicate: column_reference _opt_space "IS" _opt_space not? _opt_space ("TRUE" | "FALSE" | "UNKNOWN" | "NULL")
+null_predicate: column_reference "IS" not? ("TRUE" | "FALSE" | "UNKNOWN" | "NULL")
 
-comparison_predicate: value_expression _opt_space comp_op _opt_space value_expression
+comparison_predicate: value_expression comp_op value_expression
 
-like_predicate: character_value_expression _opt_space not? _opt_space ("ILIKE" | "LIKE") _opt_space character_value_expression
+like_predicate: character_value_expression not? ("ILIKE" | "LIKE") character_value_expression
 
 comp_op: "=" | "<>" | "<" | ">" | "<=" | ">="
 
-between_predicate: value_expression _opt_space not? _opt_space between _opt_space value_expression _opt_space and _opt_space value_expression
+between_predicate: value_expression not? between value_expression and value_expression
 
-in_predicate: value_expression _opt_space not? _opt_space in _opt_space in_predicate_value
+in_predicate: value_expression not? in in_predicate_value
 
 in_predicate_value: identifier
-    | "(" _opt_space value_expression (_opt_space "," _opt_space value_expression)* _opt_space ")"
-    | "(" _opt_space query_expression _opt_space ")"
+    | "(" value_expression ("," value_expression)* ")"
+    | "(" query_expression ")"
 
-exists_predicate: not? _opt_space "EXISTS" REQ_SPACE subquery
+exists_predicate: not? "EXISTS" subquery
 
-order_by_clause: "ORDER" REQ_SPACE "BY" REQ_SPACE sort_specification_list
+order_by_clause: "ORDER" "BY" sort_specification_list
 
-sort_specification_list: sort_specification (_opt_space "," _opt_space sort_specification)*
+sort_specification_list: sort_specification ("," sort_specification)*
 
-sort_specification: sort_key (_opt_space ordering_specification)?
+sort_specification: sort_key (ordering_specification)?
 
 sort_key: identifier
     | UNSIGNED_INTEGER
@@ -131,33 +131,33 @@ sort_key: identifier
 ordering_specification: "ASC" | "DESC"
 
 // HAVING clause depends on GROUP BY clause
-group_by_clause: "GROUP" REQ_SPACE "BY" REQ_SPACE group_by_term_list (REQ_SPACE having_clause)?
+group_by_clause: "GROUP" "BY" group_by_term_list (having_clause)?
 
-group_by_term_list: identifier (_opt_space "," _opt_space identifier)*
+group_by_term_list: identifier ("," identifier)*
 
-having_clause: "HAVING" REQ_SPACE ("(" _opt_space search_condition _opt_space ")"
-    | _opt_space search_condition)
+having_clause: "HAVING" ("(" search_condition ")"
+    | search_condition)
 
-offset_clause: "OFFSET" REQ_SPACE UNSIGNED_INTEGER
+offset_clause: "OFFSET" UNSIGNED_INTEGER
 
 // Identifiers (<schema>.<table>.<field>), numerical, geometrical, string expressions and functions
 
-table_name: identifier (_opt_space "." _opt_space identifier) ~ 0..2
+table_name: identifier ("." identifier)~0..2
 
 // # we don't re-use table_name here since PEG uses greedy matching
 // # and thus would parse x.a all as a table name.  Thus, for
 // # column_reference we simply allow 1..4 identifiers.
-column_reference: (identifier _opt_space "." _opt_space) ~ 0..3 identifier
+column_reference: (identifier ".") ~ 0..3 identifier
 
 identifier: (regular_identifier | delimited_identifier)
 
 delimited_identifier: /["]/ (/[""]/ | /[^"]/)+ /["]/
 
-regular_identifier: ((keyword)~0 LETTER (LETTER | DIGIT | "_")*)
+regular_identifier: ((keyword)~0 /[a-zA-Z]+[a-zA-Z0-9_]*/)
 
-character_string_literal: (/[']/ (/['']/ | /[^']/)* /[']/ (SPACE+ SQL_COMMENT _opt_space)*)+
+character_string_literal: (/[']/ (/['']/ | /[^']/)* /[']/ (SPACE+ SQL_COMMENT)*)+
 
-fold_function: ("UPPER" | "LOWER") _opt_space "(" _opt_space character_value_expression _opt_space ")"
+fold_function: ("UPPER" | "LOWER") "(" character_value_expression ")"
 
 string_value_function: string_geometry_function
     | fold_function
@@ -167,7 +167,7 @@ character_primary: character_string_literal
     | string_value_function
     | value_expression_primary
 
-concatenation: character_primary _opt_space "||" _opt_space character_value_expression
+concatenation: character_primary "||" character_value_expression
 
 geometry_function: geometry_value_function
     | non_predicate_geometry_function
@@ -178,7 +178,7 @@ geometry_function: geometry_value_function
 bitwise_op: "&" | "|" | "^"
 
 bitwise_expression: "~" numeric_value_expression
-    | numeric_value_expression _opt_space bitwise_op _opt_space numeric_value_expression
+    | numeric_value_expression bitwise_op numeric_value_expression
 
 string_value_expression: character_value_expression
 
@@ -194,54 +194,54 @@ geometry_value_function: box
     | region
     | user_defined_function
 
-coordinates: numeric_value_expression _opt_space "," _opt_space numeric_value_expression
+coordinates: numeric_value_expression "," numeric_value_expression
 
-box: "BOX" _opt_space "(" ( _opt_space character_string_literal ",")? _opt_space coordinates _opt_space "," _opt_space numeric_value_expression _opt_space "," _opt_space numeric_value_expression _opt_space ")"
+box: "BOX" "(" ( character_string_literal ",")? coordinates "," numeric_value_expression "," numeric_value_expression ")"
 
-centroid: "CENTROID" _opt_space "(" _opt_space geometry_value_expression _opt_space ")"
+centroid: "CENTROID" "(" geometry_value_expression ")"
 
-circle: "CIRCLE" _opt_space "(" _opt_space string_value_expression _opt_space "," _opt_space coordinates _opt_space "," _opt_space numeric_value_expression _opt_space ")"
+circle: "CIRCLE" "(" string_value_expression "," coordinates "," numeric_value_expression ")"
 
-polygon: "POLYGON" _opt_space "(" _opt_space string_value_expression _opt_space "," _opt_space coordinates _opt_space "," _opt_space coordinates _opt_space (_opt_space "," _opt_space coordinates)* _opt_space ")"
+polygon: "POLYGON" "(" string_value_expression "," coordinates "," coordinates ("," coordinates)* ")"
 
 non_predicate_geometry_function: area
     | coord1
     | coord2
     | distance
 
-area: "AREA" _opt_space "(" _opt_space geometry_value_expression _opt_space ")"
+area: "AREA" "(" geometry_value_expression ")"
 
-coord1: "COORD1" _opt_space "(" _opt_space coord_value _opt_space ")"
+coord1: "COORD1" "(" coord_value ")"
 
-coord2: "COORD2" _opt_space "(" _opt_space coord_value _opt_space ")"
+coord2: "COORD2" "(" coord_value ")"
 
 coord_value: point
     | column_reference
 
-distance: "DISTANCE" _opt_space "(" _opt_space coord_value _opt_space "," _opt_space coord_value _opt_space ")"
+distance: "DISTANCE" "(" coord_value "," coord_value ")"
 
 predicate_geometry_function: contains
     | intersects
 
-contains: "CONTAINS" _opt_space "(" _opt_space geometry_value_expression _opt_space "," _opt_space geometry_value_expression _opt_space ")"
+contains: "CONTAINS" "(" geometry_value_expression "," geometry_value_expression ")"
 
-intersects: "INTERSECTS" _opt_space "(" _opt_space geometry_value_expression _opt_space "," _opt_space geometry_value_expression _opt_space ")"
+intersects: "INTERSECTS" "(" geometry_value_expression "," geometry_value_expression ")"
 
-region: "REGION" _opt_space "(" _opt_space string_value_expression _opt_space ")"
+region: "REGION" "(" string_value_expression ")"
 
-extract_coord_sys: "COORDSYS" _opt_space "(" _opt_space geometry_value_expression _opt_space ")"
+extract_coord_sys: "COORDSYS" "(" geometry_value_expression ")"
 
 string_geometry_function: extract_coord_sys
     | user_defined_function
 
-math_function: (onetwo_param_math "(" _opt_space numeric_value_expression (_opt_space "," _opt_space SIGNED_INTEGER)? _opt_space ")")
-    | (two_param_math "(" _opt_space numeric_value_expression _opt_space "," _opt_space numeric_value_expression _opt_space ")" )
-    | (one_param_math "(" _opt_space numeric_value_expression _opt_space ")")
+math_function: (onetwo_param_math "(" numeric_value_expression ("," SIGNED_INTEGER)? ")")
+    | (two_param_math "(" numeric_value_expression "," numeric_value_expression ")" )
+    | (one_param_math "(" numeric_value_expression ")")
     | rand_function
-    | (no_param_math "(" _opt_space ")")
+    | (no_param_math "(" ")")
 
-trig_function: (two_param_trig "(" _opt_space numeric_value_expression _opt_space "," _opt_space numeric_value_expression _opt_space ")")
-    | (one_param_trig "(" _opt_space numeric_value_expression _opt_space ")")
+trig_function: (two_param_trig "(" numeric_value_expression "," numeric_value_expression ")")
+    | (one_param_trig "(" numeric_value_expression ")")
 
 // No Params
 no_param_math: "PI"
@@ -272,24 +272,24 @@ two_param_trig: "ATAN2"
 
 onetwo_param_math: "ROUND" | "TRUNCATE"
 
-rand_function: "RAND" _opt_space "(" (_opt_space numeric_value_expression _opt_space)? ")"
+rand_function: "RAND" "(" (numeric_value_expression)? ")"
 
-string_function: string_func_name "(" _opt_space value_expression _opt_space ")"
+string_function: string_func_name "(" value_expression ")"
 
 string_func_name: "LOWER"
 
-set_function_specification: "COUNT" _opt_space "(" ("*" | (set_quantifier _opt_space)? identifier) ")"
+set_function_specification: "COUNT" "(" ("*" | (set_quantifier)? identifier) ")"
     | general_set_function
 
 set_function_type: "AVG" | "MAX" | "MIN" | "SUM"
 
 general_set_function: set_function_type "(" set_quantifier? numeric_value_expression ")"
 
-point: "POINT" _opt_space "(" _opt_space ( string_value_expression | "NULL") _opt_space "," _opt_space coordinates _opt_space ")"
+point: "POINT" "(" ( string_value_expression | "NULL") "," coordinates ")"
 
-numeric_value_expression: term (_opt_space ("+" | "-") _opt_space numeric_value_expression)*
+numeric_value_expression: term (("+" | "-") numeric_value_expression)*
 
-term: factor (_opt_space ("*" | "/") _opt_space term)*
+term: factor (("*" | "/") term)*
 
 factor: ("-" | "+")? numeric_primary
 
@@ -303,7 +303,7 @@ numeric_geometry_function: predicate_geometry_function
 
 udf_name: udf_prefix regular_identifier
 
-user_defined_function: udf_name "(" (_opt_space value_expression (_opt_space "," _opt_space value_expression)* _opt_space)? ")"
+user_defined_function: udf_name "(" (value_expression ("," value_expression)*)? ")"
 
 // We need to seriously re-write value_expression because PEG
 // doesn't have an actual longest-match operator.  Thus, we
@@ -316,7 +316,7 @@ value_expression_first_operand: user_defined_function
 	| string_expression_operand
 	| numeric_expression_operand
 
-value_expression: (value_expression_first_operand _opt_space ( string_expression_rest | numeric_expression_rest)? | geometry_value_expression)
+value_expression: (value_expression_first_operand ( string_expression_rest | numeric_expression_rest)? | geometry_value_expression)
 
 // TODO: value_expression_primary (as in the BNF) is unnecessarily wide
 // here ("CENTROID(3)")
@@ -326,19 +326,19 @@ geometry_value_expression: value_expression_primary
 value_expression_primary: unsigned_literal
     | column_reference
     | set_function_specification
-    | "(" _opt_space value_expression _opt_space ")"
+    | "(" value_expression ")"
 
-string_expression: string_expression_operand (_opt_space string_expression_rest)*
+string_expression: string_expression_operand (string_expression_rest)*
 
 string_expression_operand: character_value_expression
 
-string_expression_rest: "||" _opt_space string_expression_operand
+string_expression_rest: "||" string_expression_operand
 
-numeric_expression: numeric_expression_operand (_opt_space numeric_expression_rest)*
+numeric_expression: numeric_expression_operand (numeric_expression_rest)*
 
 numeric_expression_operand: numeric_value_expression
 
-numeric_expression_rest: ("+" | "-" | "*" | "/") _opt_space numeric_expression_operand
+numeric_expression_rest: ("+" | "-" | "*" | "/") numeric_expression_operand
 
 approximate_numeric_literal: exact_numeric_literal "E" SIGNED_INTEGER
 
@@ -620,10 +620,6 @@ sql_reserved_word: ("ABSOLUTE"
 | "YEAR"
 | "ZONE" )
 
-_opt_space: (SQL_COMMENT | SPACE | NEWLINE)*
-
-REQ_SPACE: (SQL_COMMENT | SPACE | NEWLINE)+
-
 _a: /[^A-Z0-9_]/
 
 udf_prefix: "ivo_"
@@ -639,3 +635,5 @@ udf_prefix: "ivo_"
 %import common.SQL_COMMENT
 %import common.WS_INLINE -> SPACE
 %import common.NEWLINE
+
+%ignore SPACE
