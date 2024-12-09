@@ -151,7 +151,7 @@ column_reference: (identifier ".") ~ 0..3 identifier
 
 identifier: (regular_identifier | delimited_identifier)
 
-delimited_identifier: /["]/ (/[""]/ | /[^"]/)+ /["]/
+delimited_identifier: /"([^"]|\"\")*"/
 
 regular_identifier: ((keyword)~0 /[a-zA-Z]+[a-zA-Z0-9_]*/)
 
