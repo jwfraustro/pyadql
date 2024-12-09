@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!--+
+    |
+    | Copyright (c) 2016, ROE (http://www.roe.ac.uk/)
+    | All rights reserved.
+    |
+    | This program is free software: you can redistribute it and/or modify
+    | it under the terms of the GNU General Public License as published by
+    | the Free Software Foundation, either version 3 of the License, or
+    | (at your option) any later version.
+    |
+    | This program is distributed in the hope that it will be useful,
+    | but WITHOUT ANY WARRANTY; without even the implied warranty of
+    | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    | GNU General Public License for more details.
+    |
+    | You should have received a copy of the GNU General Public License
+    | along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    |
+    +-->
+<queries>
+
+    <!--+
+        | Contact details of who to talk to about this set of queries.
+        +--> 
+    <contact>
+        <name>Dave Morris</name>
+        <url>https://github.com/Zarquan</url>
+    </contact>
+    <!--+
+        | The publisher of this set of queries.
+        +--> 
+    <publisher>
+        <name>The Royal Observatory, Edinburgh</name>
+        <url>http://www.roe.ac.uk/</url>
+    </publisher>
+
+    <!--+
+        | A query, with a unique identifier.
+        | On Linux, use uuidgen to generate a unique identifier. 
+        +--> 
+    <query uuid='8a717d52-c83b-47a7-822e-2c0937341a27'>
+
+        <!--+
+            | A URL that can be used to identify the target dataset.
+            | Use http://wwww.example.org/ for examples.
+            +--> 
+        <dataset>http://osa.roe.ac.uk/</dataset>
+        <!--+
+            | A text description of the query.
+            +--> 
+        <description>
+            <![CDATA[
+            As simple example.
+            ]]>
+        </description>
+
+        <!--+
+            | The ADQL query.
+            | valid = true if the query is valid ADQL
+            | version = the target version of ADQL
+            +--> 
+        <adql version='adql-2.1' valid='true'>
+            <![CDATA[
+            SELECT
+                TOP 5
+                ra,
+                dec
+            FROM
+                atlasSource
+            ]]>
+        </adql>
+
+        <!--+
+            | Details of the target dataset (TBD).
+            +--> 
+        <target>
+            <!--+
+                | Details of the target TAP service (TBD).
+                +--> 
+            <tap></tap>
+            <!--+
+                | VOSI metadata of the target data (TBD).
+                +--> 
+            <vosi></vosi>
+        </target>
+
+        <!--+
+            | Details of the expected results.
+            +--> 
+        <expected>
+            <!--+
+                | Details of the expected rows.
+                +--> 
+            <rows>
+                <count>5</count>
+            </rows>
+            <!--+
+                | Details of the expected columns.
+                +--> 
+            <columns>
+                <column>
+                    <name>ra</name>
+                    <description>Right ascension</description>
+                    <unit>deg</unit>
+                    <ucd>pos.eq.ra;meta.main</ucd>
+                    <type>float</type>
+                </column>
+                <column>
+                    <name>dec</name>
+                    <description>Declination</description>
+                    <unit>deg</unit>
+                    <ucd>pos.eq.dec;meta.main</ucd>
+                    <type>float</type>
+                </column>
+            </columns>
+        </expected>
+    </query>
+</queries>
+
+
+
