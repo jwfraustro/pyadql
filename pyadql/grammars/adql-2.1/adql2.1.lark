@@ -11,15 +11,11 @@
 
 // ============================ The Grammar's root symbol
 
-query_specification:
-    with_clause? _
-    query_expression _ EOF
+query_specification: with_clause? _query_expression _ EOF
 
 // ============================ Top level query parts
 
-with_clause:
-    "WITH" _ with_query
-        _ ("," _ with_query)*
+with_clause: "WITH" _ with_query _ ("," _ with_query)*
 
 with_query:
     identifier __ as
