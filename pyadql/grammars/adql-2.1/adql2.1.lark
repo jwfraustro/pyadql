@@ -6,24 +6,24 @@ query_specification: with_clause? query_expression
 
 // ============================ Top level query parts
 
-with_clause: "WITH" with_query ("," with_query)*
+with_clause: "WITH"i with_query ("," with_query)*
 
 with_query: identifier as "(" query_expression ")"
 
 query_expression: select_query (set_operator set_query_expression)*
 
-set_operator: ("EXCEPT" | "INTERSECT" | "UNION") _a ("ALL" _a)?
+set_operator: ("EXCEPT"i | "INTERSECT"i | "UNION"i) _a ("ALL"i _a)?
 
 set_query_expression: query_expression
     | "(" query_expression ")"
 
 // Select clause
 
-select_query: "SELECT" (set_quantifier)? (set_limit)? select_list table_expression
+select_query: "SELECT"i (set_quantifier)? (set_limit)? select_list table_expression
 
-set_quantifier: ("DISTINCT" | "ALL") _a
+set_quantifier: ("DISTINCT"i | "ALL"i) _a
 
-set_limit: "TOP" UNSIGNED_INTEGER
+set_limit: "TOP"i UNSIGNED_INTEGER
 
 // ================================= Select lists and their items
 select_list: "*"
@@ -38,13 +38,13 @@ derived_column: value_expression as_clause?
 
 table_expression: from_clause (where_clause)? (group_by_clause)? (order_by_clause)? (offset_clause)?
 
-from_clause: "FROM" from_list
+from_clause: "FROM"i from_list
 
 from_list: table_reference ("," table_reference)*
 
 // joining correlation_specification and as_clause
 
-as_clause: "AS"? identifier
+as_clause: "AS"i? identifier
 
 table_reference: joined_table
     | table_name (SPACE as_clause)?
@@ -67,10 +67,10 @@ subquery: "(" query_expression ")"
 
 join_clause: join_method? join table_reference (join_specification)? ((sub_join | join_clause))*
 
-join_type: ("INNER"
-    | (outer_join_type)? "OUTER") _a
+join_type: ("INNER"i
+    | (outer_join_type)? "OUTER"i) _a
 
-outer_join_type: ("LEFT" | "RIGHT" | "FULL") _a
+outer_join_type: ("LEFT"i | "RIGHT"i | "FULL"i) _a
 
 join_method: natural? (join_type)?
 
@@ -79,7 +79,7 @@ join_specification: join_condition
 
 join_condition: on search_condition
 
-named_columns_join: "USING" "(" identifier ("," identifier)* ")"
+named_columns_join: "USING"i "(" identifier ("," identifier)* ")"
 
 // WHERE clause
 
@@ -101,11 +101,11 @@ boolean_factor: not? boolean_primary
 boolean_primary: "(" search_condition ")"
     | predicate
 
-null_predicate: column_reference "IS" not? ("TRUE" | "FALSE" | "UNKNOWN" | "NULL")
+null_predicate: column_reference "IS" not? ("TRUE"i | "FALSE"i | "UNKNOWN"i | "NULL"i)
 
 comparison_predicate: value_expression comp_op value_expression
 
-like_predicate: character_value_expression not? ("ILIKE" | "LIKE") character_value_expression
+like_predicate: character_value_expression not? ("ILIKE"i | "LIKE"i) character_value_expression
 
 comp_op: "=" | "<>" | "<" | ">" | "<=" | ">="
 
@@ -117,9 +117,9 @@ in_predicate_value: identifier
     | "(" value_expression ("," value_expression)* ")"
     | "(" query_expression ")"
 
-exists_predicate: not? "EXISTS" subquery
+exists_predicate: not? "EXISTS"i subquery
 
-order_by_clause: "ORDER" "BY" sort_specification_list
+order_by_clause: "ORDER"i "BY"i sort_specification_list
 
 sort_specification_list: sort_specification ("," sort_specification)*
 
@@ -128,17 +128,17 @@ sort_specification: sort_key (ordering_specification)?
 sort_key: identifier
     | UNSIGNED_INTEGER
 
-ordering_specification: "ASC" | "DESC"
+ordering_specification: "ASC"i | "DESC"i
 
 // HAVING clause depends on GROUP BY clause
-group_by_clause: "GROUP" "BY" group_by_term_list (having_clause)?
+group_by_clause: "GROUP"i "BY"i group_by_term_list (having_clause)?
 
 group_by_term_list: identifier ("," identifier)*
 
-having_clause: "HAVING" ("(" search_condition ")"
+having_clause: "HAVING"i ("(" search_condition ")"
     | search_condition)
 
-offset_clause: "OFFSET" UNSIGNED_INTEGER
+offset_clause: "OFFSET"i UNSIGNED_INTEGER
 
 // Identifiers (<schema>.<table>.<field>), numerical, geometrical, string expressions and functions
 
@@ -157,7 +157,7 @@ regular_identifier: ((keyword)~0 /[a-zA-Z]+[a-zA-Z0-9_]*/)
 
 character_string_literal: (/[']/ (/['']/ | /[^']/)* /[']/ (SPACE+ SQL_COMMENT)*)+
 
-fold_function: ("UPPER" | "LOWER") "(" character_value_expression ")"
+fold_function: ("UPPER"i | "LOWER"i) "(" character_value_expression ")"
 
 string_value_function: string_geometry_function
     | fold_function
@@ -196,40 +196,40 @@ geometry_value_function: box
 
 coordinates: numeric_value_expression "," numeric_value_expression
 
-box: "BOX" "(" ( character_string_literal ",")? coordinates "," numeric_value_expression "," numeric_value_expression ")"
+box: "BOX"i "(" ( character_string_literal ",")? coordinates "," numeric_value_expression "," numeric_value_expression ")"
 
-centroid: "CENTROID" "(" geometry_value_expression ")"
+centroid: "CENTROID"i "(" geometry_value_expression ")"
 
-circle: "CIRCLE" "(" string_value_expression "," coordinates "," numeric_value_expression ")"
+circle: "CIRCLE"i "(" string_value_expression "," coordinates "," numeric_value_expression ")"
 
-polygon: "POLYGON" "(" string_value_expression "," coordinates "," coordinates ("," coordinates)* ")"
+polygon: "POLYGON"i "(" string_value_expression "," coordinates "," coordinates ("," coordinates)* ")"
 
 non_predicate_geometry_function: area
     | coord1
     | coord2
     | distance
 
-area: "AREA" "(" geometry_value_expression ")"
+area: "AREA"i "(" geometry_value_expression ")"
 
-coord1: "COORD1" "(" coord_value ")"
+coord1: "COORD1"i "(" coord_value ")"
 
-coord2: "COORD2" "(" coord_value ")"
+coord2: "COORD2"i "(" coord_value ")"
 
 coord_value: point
     | column_reference
 
-distance: "DISTANCE" "(" coord_value "," coord_value ")"
+distance: "DISTANCE"i "(" coord_value "," coord_value ")"
 
 predicate_geometry_function: contains
     | intersects
 
-contains: "CONTAINS" "(" geometry_value_expression "," geometry_value_expression ")"
+contains: "CONTAINS"i "(" geometry_value_expression "," geometry_value_expression ")"
 
-intersects: "INTERSECTS" "(" geometry_value_expression "," geometry_value_expression ")"
+intersects: "INTERSECTS"i "(" geometry_value_expression "," geometry_value_expression ")"
 
-region: "REGION" "(" string_value_expression ")"
+region: "REGION"i "(" string_value_expression ")"
 
-extract_coord_sys: "COORDSYS" "(" geometry_value_expression ")"
+extract_coord_sys: "COORDSYS"i "(" geometry_value_expression ")"
 
 string_geometry_function: extract_coord_sys
     | user_defined_function
@@ -244,48 +244,48 @@ trig_function: (two_param_trig "(" numeric_value_expression "," numeric_value_ex
     | (one_param_trig "(" numeric_value_expression ")")
 
 // No Params
-no_param_math: "PI"
+no_param_math: "PI"i
 
 // One Param
-one_param_trig: "ACOS"
-    | "ASIN"
-    | "ATAN"
-    | "COS"
-    | "COT"
-    | "SIN"
-    | "TAN"
+one_param_trig: "ACOS"i
+    | "ASIN"i
+    | "ATAN"i
+    | "COS"i
+    | "COT"i
+    | "SIN"i
+    | "TAN"i
 
-one_param_math: "ABS"
-    | "CEILING"
-    | "DEGREES"
-    | "EXP"
-    | "FLOOR"
-    | "LOG10"
-    | "LOG"
-    | "RADIANS"
-    | "SQRT"
+one_param_math: "ABS"i
+    | "CEILING"i
+    | "DEGREES"i
+    | "EXP"i
+    | "FLOOR"i
+    | "LOG10"i
+    | "LOG"i
+    | "RADIANS"i
+    | "SQRT"i
 
 // Two Params
-two_param_math: "MOD" | "POWER"
+two_param_math: "MOD"i | "POWER"i
 
-two_param_trig: "ATAN2"
+two_param_trig: "ATAN2"i
 
-onetwo_param_math: "ROUND" | "TRUNCATE"
+onetwo_param_math: "ROUND"i | "TRUNCATE"i
 
-rand_function: "RAND" "(" (numeric_value_expression)? ")"
+rand_function: "RAND"i "(" (numeric_value_expression)? ")"
 
 string_function: string_func_name "(" value_expression ")"
 
-string_func_name: "LOWER"
+string_func_name: "LOWER"i
 
-set_function_specification: "COUNT" "(" ("*" | (set_quantifier)? identifier) ")"
+set_function_specification: "COUNT"i "(" ("*" | (set_quantifier)? identifier) ")"
     | general_set_function
 
-set_function_type: "AVG" | "MAX" | "MIN" | "SUM"
+set_function_type: "AVG"i | "MAX"i | "MIN"i | "SUM"i
 
 general_set_function: set_function_type "(" set_quantifier? numeric_value_expression ")"
 
-point: "POINT" "(" ( string_value_expression | "NULL") "," coordinates ")"
+point: "POINT"i "(" ( string_value_expression | "NULL"i) "," coordinates ")"
 
 numeric_value_expression: term (("+" | "-") numeric_value_expression)*
 
@@ -340,7 +340,7 @@ numeric_expression_operand: numeric_value_expression
 
 numeric_expression_rest: ("+" | "-" | "*" | "/") numeric_expression_operand
 
-approximate_numeric_literal: exact_numeric_literal "E" SIGNED_INTEGER
+approximate_numeric_literal: exact_numeric_literal "E"i SIGNED_INTEGER
 
 exact_numeric_literal: (UNSIGNED_INTEGER ".")* UNSIGNED_INTEGER
 
@@ -357,272 +357,306 @@ unsigned_numeric_literal: approximate_numeric_literal
 numeric_primary: value_expression_primary
     | numeric_value_function
 
-unsigned_hexadecimal: "0x" HEXDIGIT+
+unsigned_hexadecimal: "0x"i HEXDIGIT+
 
 // Reserved words
 
-as: "AS" _a
+as: "AS"i _a
 
-on: "ON" _a
+on: "ON"i _a
 
-in: "IN" _a
+in: "IN"i _a
 
-join: "JOIN" _a
+join: "JOIN"i _a
 
-natural: "NATURAL" _a
+natural: "NATURAL"i _a
 
-between: "BETWEEN" _a
+between: "BETWEEN"i _a
 
-and: "AND" _a
+and: "AND"i _a
 
-or: "OR" _a
+or: "OR"i _a
 
-not: "NOT" _a
+not: "NOT"i _a
 
-where: "WHERE" _a
+where: "WHERE"i _a
 
 keyword: adql_reserved_word | sql_reserved_word
 
-adql_reserved_word: ("ABS" | "ACOS" | "AREA" | "ASIN" | "ATAN2" | "ATAN"
-    | "BIT_AND" | "BIT_NOT" | "BIT_OR" | "BIT_XOR" | "BOX"
-    | "CEILING" | "CENTROID" | "CIRCLE" | "CONTAINS" | "COORD1"
-    | "COORD2" | "COORDSYS" | "COS" | "DEGREES" | "DISTANCE"
-    | "EXP" | "FLOOR" | "ILIKE" | "INTERSECTS" | "IN_UNIT" | "LOG10"
-    | "LOG" | "MOD" | "PI" | "POINT" | "POLYGON" | "POWER" | "RADIANS"
-    | "REGION" | "RAND" | "ROUND" | "SIN" | "SQRT" | "TOP" | "TAN"
-    | "TRUNCATE")
+adql_reserved_word: ("ABS"i
+    | "ACOS"i
+    | "AREA"i
+    | "ASIN"i
+    | "ATAN2"i
+    | "ATAN"i
+    | "BIT_AND"i
+    | "BIT_NOT"i
+    | "BIT_OR"i
+    | "BIT_XOR"i
+    | "BOX"i
+    | "CEILING"i
+    | "CENTROID"i
+    | "CIRCLE"i
+    | "CONTAINS"i
+    | "COORD1"i
+    | "COORD2"i
+    | "COORDSYS"i
+    | "COS"i
+    | "DEGREES"i
+    | "DISTANCE"i
+    | "EXP"i
+    | "FLOOR"i
+    | "ILIKE"i
+    | "INTERSECTS"i
+    | "IN_UNIT"i
+    | "LOG10"i
+    | "LOG"i
+    | "MOD"i
+    | "PI"i
+    | "POINT"i
+    | "POLYGON"i
+    | "POWER"i
+    | "RADIANS"i
+    | "REGION"i
+    | "RAND"i
+    | "ROUND"i
+    | "SIN"i
+    | "SQRT"i
+    | "TOP"i
+    | "TAN"i
+    | "TRUNCATE"i )
 
-sql_reserved_word: ("ABSOLUTE"
-| "ACTION"
-| "ADD"
-| "ALLOCATE"
-| "ALL"
-| "ALTER"
+sql_reserved_word: ("ABSOLUTE"i
+| "ACTION"i
+| "ADD"i
+| "ALLOCATE"i
+| "ALL"i
+| "ALTER"i
 | and
-| "ANY"
-| "ARE"
+| "ANY"i
+| "ARE"i
 | as
-| "ASC"
-| "ASSERTION"
-| "AT"
-| "AUTHORISATION"
-| "AVG"
-| "BEGIN"
+| "ASC"i
+| "ASSERTION"i
+| "AT"i
+| "AUTHORISATION"i
+| "AVG"i
+| "BEGIN"i
 | between
-| "BIT_LENGTH"
-| "BIT"
-| "BOTH"
-| "BY"
-| "CASCADE"
-| "CASCADED"
-| "CASE"
-| "CAST"
-| "CATALOG"
-| "CHARACTER"
-| "CHAR_LENGTH"
-| "CHAR"
-| "CHARACTER_LENGTH"
-| "CHECK"
-| "CLOSE"
-| "COALESCE"
-| "COLLATE"
-| "COLLATION"
-| "COLUMN"
-| "COMMIT"
-| "CONNECT"
-| "CONNECTION"
-| "CONSTRAINT"
-| "CONSTRAINTS"
-| "CONTINUE"
-| "CONVERT"
-| "CORRESPONDING"
-| "COUNT"
-| "CREATE"
-| "CROSS"
-| "CURRENT_DATE"
-| "CURRENT_TIME"
-| "CURRENT_TIMESTAMP"
-| "CURRENT_USER"
-| "CURRENT"
-| "CURSOR"
-| "DATE"
-| "DAY"
-| "DEALLOCATE"
-| "DECIMAL"
-| "DECLARE"
-| "DEFAULT"
-| "DEFERRABLE"
-| "DEFERRED"
-| "DELETE"
-| "DESCRIBE"
-| "DESCRIPTOR"
-| "DESC"
-| "DIAGNOSTICS"
-| "DISCONNECT"
-| "DISTINCT"
-| "DOMAIN"
-| "DOUBLE"
-| "DROP"
-| "ELSE"
-| "'ENDEXEC"
-| "END"
-| "ESCAPE"
-| "EXCEPT"
-| "EXCEPTION"
-| "EXECUTE"
-| "EXEC"
-| "EXISTS"
-| "EXTERNAL"
-| "EXTRACT"
-| "FALSE"
-| "FETCH"
-| "FIRST"
-| "FLOAT"
-| "FOR"
-| "FOREIGN"
-| "FOUND"
-| "FROM"
-| "FULL"
-| "GET"
-| "GLOBAL"
-| "GOTO"
-| "GO"
-| "GRANT"
-| "GROUP"
-| "HAVING"
-| "HOUR"
-| "IDENTITY"
-| "IMMEDIATE"
-| "INDICATOR"
-| "INITIALLY"
-| "INNER"
-| "INPUT"
-| "INSENSITIVE"
-| "INSERT"
-| "INTEGER"
-| "INTERSECT"
-| "INTERVAL"
-| "INTO"
-| "INT"
-| "IN"
-| "IS"
-| "ISOLATION"
+| "BIT_LENGTH"i
+| "BIT"i
+| "BOTH"i
+| "BY"i
+| "CASCADE"i
+| "CASCADED"i
+| "CASE"i
+| "CAST"i
+| "CATALOG"i
+| "CHARACTER"i
+| "CHAR_LENGTH"i
+| "CHAR"i
+| "CHARACTER_LENGTH"i
+| "CHECK"i
+| "CLOSE"i
+| "COALESCE"i
+| "COLLATE"i
+| "COLLATION"i
+| "COLUMN"i
+| "COMMIT"i
+| "CONNECT"i
+| "CONNECTION"i
+| "CONSTRAINT"i
+| "CONSTRAINTS"i
+| "CONTINUE"i
+| "CONVERT"i
+| "CORRESPONDING"i
+| "COUNT"i
+| "CREATE"i
+| "CROSS"i
+| "CURRENT_DATE"i
+| "CURRENT_TIME"i
+| "CURRENT_TIMESTAMP"i
+| "CURRENT_USER"i
+| "CURRENT"i
+| "CURSOR"i
+| "DATE"i
+| "DAY"i
+| "DEALLOCATE"i
+| "DECIMAL"i
+| "DECLARE"i
+| "DEFAULT"i
+| "DEFERRABLE"i
+| "DEFERRED"i
+| "DELETE"i
+| "DESCRIBE"i
+| "DESCRIPTOR"i
+| "DESC"i
+| "DIAGNOSTICS"i
+| "DISCONNECT"i
+| "DISTINCT"i
+| "DOMAIN"i
+| "DOUBLE"i
+| "DROP"i
+| "ELSE"i
+| "'ENDEXEC"i
+| "END"i
+| "ESCAPE"i
+| "EXCEPT"i
+| "EXCEPTION"i
+| "EXECUTE"i
+| "EXEC"i
+| "EXISTS"i
+| "EXTERNAL"i
+| "EXTRACT"i
+| "FALSE"i
+| "FETCH"i
+| "FIRST"i
+| "FLOAT"i
+| "FOR"i
+| "FOREIGN"i
+| "FOUND"i
+| "FROM"i
+| "FULL"i
+| "GET"i
+| "GLOBAL"i
+| "GOTO"i
+| "GO"i
+| "GRANT"i
+| "GROUP"i
+| "HAVING"i
+| "HOUR"i
+| "IDENTITY"i
+| "IMMEDIATE"i
+| "INDICATOR"i
+| "INITIALLY"i
+| "INNER"i
+| "INPUT"i
+| "INSENSITIVE"i
+| "INSERT"i
+| "INTEGER"i
+| "INTERSECT"i
+| "INTERVAL"i
+| "INTO"i
+| "INT"i
+| "IN"i
+| "IS"i
+| "ISOLATION"i
 | join
-| "KEY"
-| "LANGUAGE"
-| "LAST"
-| "LEADING"
-| "LEFT"
-| "LEVEL"
-| "LIKE"
-| "ILIKE"
-| "LOCAL"
-| "LOWER"
-| "MATCH"
-| "MAX"
-| "MIN"
-| "MINUTE"
-| "MODULE"
-| "MONTH"
-| "NAMES"
-| "NATIONAL"
+| "KEY"i
+| "LANGUAGE"i
+| "LAST"i
+| "LEADING"i
+| "LEFT"i
+| "LEVEL"i
+| "LIKE"i
+| "ILIKE"i
+| "LOCAL"i
+| "LOWER"i
+| "MATCH"i
+| "MAX"i
+| "MIN"i
+| "MINUTE"i
+| "MODULE"i
+| "MONTH"i
+| "NAMES"i
+| "NATIONAL"i
 | natural
-| "NCHAR"
-| "NEXT"
-| "NO"
+| "NCHAR"i
+| "NEXT"i
+| "NO"i
 | not
-| "NULL"
-| "NULLIF"
-| "NUMERIC"
-| "OCTET_LENGTH"
-| "OFFSET"
-| "OF"
+| "NULL"i
+| "NULLIF"i
+| "NUMERIC"i
+| "OCTET_LENGTH"i
+| "OFFSET"i
+| "OF"i
 | on
-| "ONLY"
-| "OPEN"
-| "OPTION"
+| "ONLY"i
+| "OPEN"i
+| "OPTION"i
 | or
-| "ORDER"
-| "OUTER"
-| "OUTPUT"
-| "OVERLAPS"
-| "PAD"
-| "PARTIAL"
-| "POSITION"
-| "PRECISION"
-| "PREPARE"
-| "PRESERVE"
-| "PRIMARY"
-| "PRIOR"
-| "PRIVILEGES"
-| "PROCEDURE"
-| "PUBLIC"
-| "READ"
-| "REAL"
-| "REFERENCES"
-| "RELATIVE"
-| "RESTRICT"
-| "REVOKE"
-| "RIGHT"
-| "ROLLBACK"
-| "ROWS"
-| "SCHEMA"
-| "SCROLL"
-| "SECOND"
-| "SELECT"
-| "SECTION"
-| "SESSION_USER"
-| "SET"
-| "SIZE"
-| "SMALLINT"
-| "SOME"
-| "SPACE"
-| "SQL"
-| "SQLCODE"
-| "SQLERROR"
-| "SQLSTATE"
-| "SUBSTRING"
-| "SUM"
-| "SYSTEM_USER"
-| "TABLE"
-| "TEMPORARY"
-| "THEN"
-| "TIMESTAMP"
-| "TIMEZONE_HOUR"
-| "TIMEZONE_MINUTE"
-| "TIME"
-| "TO"
-| "TRAILING"
-| "TRANSACTION"
-| "TRANSLATE"
-| "TRANSLATION"
-| "TRIM"
-| "TRUE"
-| "UNION"
-| "UNIQUE"
-| "UNKNOWN"
-| "UPDATE"
-| "UPPER"
-| "USAGE"
-| "USER"
-| "USING"
-| "VALUES"
-| "VALUE"
-| "VARCHAR"
-| "VARYING"
-| "VIEW"
-| "WHENEVER"
-| "WHEN"
+| "ORDER"i
+| "OUTER"i
+| "OUTPUT"i
+| "OVERLAPS"i
+| "PAD"i
+| "PARTIAL"i
+| "POSITION"i
+| "PRECISION"i
+| "PREPARE"i
+| "PRESERVE"i
+| "PRIMARY"i
+| "PRIOR"i
+| "PRIVILEGES"i
+| "PROCEDURE"i
+| "PUBLIC"i
+| "READ"i
+| "REAL"i
+| "REFERENCES"i
+| "RELATIVE"i
+| "RESTRICT"i
+| "REVOKE"i
+| "RIGHT"i
+| "ROLLBACK"i
+| "ROWS"i
+| "SCHEMA"i
+| "SCROLL"i
+| "SECOND"i
+| "SELECT"i
+| "SECTION"i
+| "SESSION_USER"i
+| "SET"i
+| "SIZE"i
+| "SMALLINT"i
+| "SOME"i
+| "SPACE"i
+| "SQL"i
+| "SQLCODE"i
+| "SQLERROR"i
+| "SQLSTATE"i
+| "SUBSTRING"i
+| "SUM"i
+| "SYSTEM_USER"i
+| "TABLE"i
+| "TEMPORARY"i
+| "THEN"i
+| "TIMESTAMP"i
+| "TIMEZONE_HOUR"i
+| "TIMEZONE_MINUTE"i
+| "TIME"i
+| "TO"i
+| "TRAILING"i
+| "TRANSACTION"i
+| "TRANSLATE"i
+| "TRANSLATION"i
+| "TRIM"i
+| "TRUE"i
+| "UNION"i
+| "UNIQUE"i
+| "UNKNOWN"i
+| "UPDATE"i
+| "UPPER"i
+| "USAGE"i
+| "USER"i
+| "USING"i
+| "VALUES"i
+| "VALUE"i
+| "VARCHAR"i
+| "VARYING"i
+| "VIEW"i
+| "WHENEVER"i
+| "WHEN"i
 | where
-| "WITH"
-| "WORK"
-| "WRITE"
-| "YEAR"
-| "ZONE" )
+| "WITH"i
+| "WORK"i
+| "WRITE"i
+| "YEAR"i
+| "ZONE"i )
 
 _a: /[^A-Z0-9_]/
 
-udf_prefix: "ivo_"
+udf_prefix: "ivo_"i
 
 %import common.LETTER
 %import common.DIGIT
