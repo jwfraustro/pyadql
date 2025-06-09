@@ -8,7 +8,7 @@ adql_parser = Lark.open(
 )
 
 
-text = "select x, my_column FROM y WHERE z=0 AND v>2"
+text = "select * from y where CENTROID(CIRCLE('fk4', 2, 3, 3))=x"
 
 parsed = adql_parser.parse(text)
 tree.pydot__tree_to_png(parsed, "parsed.png")
