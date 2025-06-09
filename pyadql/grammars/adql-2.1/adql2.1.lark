@@ -12,7 +12,7 @@ with_query: identifier as "(" query_expression ")"
 
 query_expression: select_query (set_operator set_query_expression)*
 
-set_operator: ("EXCEPT"i | "INTERSECT"i | "UNION"i) _a ("ALL"i _a)?
+set_operator: ("EXCEPT"i | "INTERSECT"i | "UNION"i) _A ("ALL"i _A)?
 
 set_query_expression: query_expression
     | "(" query_expression ")"
@@ -21,18 +21,18 @@ set_query_expression: query_expression
 
 select_query: "SELECT"i (set_quantifier)? (set_limit)? select_list table_expression
 
-set_quantifier: ("DISTINCT"i | "ALL"i) _a
+set_quantifier: ("DISTINCT"i | "ALL"i) _A
 
 set_limit: "TOP"i UNSIGNED_INTEGER
 
 // ================================= Select lists and their items
-select_list: "*"
+select_list: "*" -> select_all
     | select_sublist ("," select_sublist)*
 
-select_sublist: table_name "." "*"
+?select_sublist: table_name "." "*"
     | derived_column
 
-derived_column: value_expression as_clause?
+?derived_column: value_expression as_clause?
 
 // Table expressions (FROM clause: tables, join, etc.)
 
@@ -68,9 +68,9 @@ subquery: "(" query_expression ")"
 join_clause: join_method? join table_reference (join_specification)? ((sub_join | join_clause))*
 
 join_type: ("INNER"i
-    | (outer_join_type)? "OUTER"i) _a
+    | (outer_join_type)? "OUTER"i) _A
 
-outer_join_type: ("LEFT"i | "RIGHT"i | "FULL"i) _a
+outer_join_type: ("LEFT"i | "RIGHT"i | "FULL"i) _A
 
 join_method: natural? (join_type)?
 
@@ -83,22 +83,22 @@ named_columns_join: "USING"i "(" identifier ("," identifier)* ")"
 
 // WHERE clause
 
-where_clause: where search_condition
+where_clause: "WHERE"i _A search_condition
 
-search_condition: boolean_term (or boolean_term)*
+search_condition: boolean_term ("OR"i _A boolean_term)*
 
-boolean_term: boolean_factor (and boolean_factor)*
+?boolean_term: boolean_factor ("AND"i _A boolean_factor)*
 
-predicate: comparison_predicate
+?predicate: comparison_predicate
     | between_predicate
     | in_predicate
     | like_predicate
     | null_predicate
     | exists_predicate
 
-boolean_factor: not? boolean_primary
+?boolean_factor: not? boolean_primary
 
-boolean_primary: "(" search_condition ")"
+?boolean_primary: "(" search_condition ")"
     | predicate
 
 null_predicate: column_reference "IS" not? ("TRUE"i | "FALSE"i | "UNKNOWN"i | "NULL"i)
@@ -107,7 +107,12 @@ comparison_predicate: value_expression comp_op value_expression
 
 like_predicate: character_value_expression not? ("ILIKE"i | "LIKE"i) character_value_expression
 
-comp_op: "=" | "<>" | "<" | ">" | "<=" | ">="
+comp_op: "=" -> equal
+    | "<>" -> not_equal
+    | "<" -> less_than
+    | ">" -> greater_than
+    | "<=" -> less_than_or_equal
+    | ">=" -> greater_than_or_equal
 
 between_predicate: value_expression not? between value_expression and value_expression
 
@@ -149,11 +154,11 @@ table_name: identifier ("." identifier)~0..2
 // # column_reference we simply allow 1..4 identifiers.
 column_reference: (identifier ".") ~ 0..3 identifier
 
-identifier: (regular_identifier | delimited_identifier)
+?identifier: (regular_identifier | delimited_identifier)
 
-delimited_identifier: /"([^"]|\"\")*"/
+?delimited_identifier: /"([^"]|\"\")*"/
 
-regular_identifier: ((keyword)~0 /[a-zA-Z]+[a-zA-Z0-9_]*/)
+?regular_identifier: ((keyword)~0 /[a-zA-Z]+[a-zA-Z0-9_]*/)
 
 character_string_literal: (/[']/ (/['']/ | /[^']/)* /[']/ (SPACE+ SQL_COMMENT)*)+
 
@@ -163,7 +168,7 @@ string_value_function: string_geometry_function
     | fold_function
     | user_defined_function
 
-character_primary: character_string_literal
+?character_primary: character_string_literal
     | string_value_function
     | value_expression_primary
 
@@ -182,11 +187,11 @@ bitwise_expression: "~" numeric_value_expression
 
 string_value_expression: character_value_expression
 
-character_value_expression: concatenation
+?character_value_expression: concatenation
     | column_reference
     | character_primary
 
-geometry_value_function: box
+?geometry_value_function: box
     | centroid
     | circle
     | point
@@ -311,26 +316,26 @@ user_defined_function: udf_name "(" (value_expression ("," value_expression)*)? 
 // TODO: see how much this overproduces wrt the original grammar:
 // (e.g., is '5'+4+3 ok by the BNF?  PG accepts that, btw)
 
-value_expression_first_operand: user_defined_function
+?value_expression_first_operand: user_defined_function
 	| column_reference
 	| string_expression_operand
 	| numeric_expression_operand
 
-value_expression: (value_expression_first_operand ( string_expression_rest | numeric_expression_rest)? | geometry_value_expression)
+?value_expression: (value_expression_first_operand ( string_expression_rest | numeric_expression_rest)? | geometry_value_expression)
 
 // TODO: value_expression_primary (as in the BNF) is unnecessarily wide
 // here ("CENTROID(3)")
-geometry_value_expression: value_expression_primary
+?geometry_value_expression: value_expression_primary
     | geometry_value_function
 
-value_expression_primary: unsigned_literal
+?value_expression_primary: unsigned_literal
     | column_reference
     | set_function_specification
     | "(" value_expression ")"
 
 string_expression: string_expression_operand (string_expression_rest)*
 
-string_expression_operand: character_value_expression
+?string_expression_operand: character_value_expression
 
 string_expression_rest: "||" string_expression_operand
 
@@ -348,10 +353,10 @@ exact_numeric_literal: (UNSIGNED_INTEGER ".")* UNSIGNED_INTEGER
 // what sort of use case did people have in mind here?
 // "POINT('ICRS',X,'SY')"
 
-unsigned_literal: unsigned_numeric_literal
+?unsigned_literal: unsigned_numeric_literal
     | character_string_literal
 
-unsigned_numeric_literal: approximate_numeric_literal
+?unsigned_numeric_literal: approximate_numeric_literal
     | exact_numeric_literal
 
 numeric_primary: value_expression_primary
@@ -361,29 +366,29 @@ unsigned_hexadecimal: "0x"i HEXDIGIT+
 
 // Reserved words
 
-as: "AS"i _a
+?as: "AS"i _A
 
-on: "ON"i _a
+?on: "ON"i _A
 
-in: "IN"i _a
+?in: "IN"i _A
 
-join: "JOIN"i _a
+?join: "JOIN"i _A
 
-natural: "NATURAL"i _a
+?natural: "NATURAL"i _A
 
-between: "BETWEEN"i _a
+?between: "BETWEEN"i _A
 
-and: "AND"i _a
+?and: "AND"i _A
 
-or: "OR"i _a
+?or: "OR"i _A
 
-not: "NOT"i _a
+?not: "NOT"i _A
 
-where: "WHERE"i _a
+?where: "WHERE"i _A
 
-keyword: adql_reserved_word | sql_reserved_word
+?keyword: adql_reserved_word | sql_reserved_word
 
-adql_reserved_word: ("ABS"i
+?adql_reserved_word: ("ABS"i
     | "ACOS"i
     | "AREA"i
     | "ASIN"i
@@ -426,7 +431,7 @@ adql_reserved_word: ("ABS"i
     | "TAN"i
     | "TRUNCATE"i )
 
-sql_reserved_word: ("ABSOLUTE"i
+?sql_reserved_word: ("ABSOLUTE"i
 | "ACTION"i
 | "ADD"i
 | "ALLOCATE"i
@@ -654,7 +659,7 @@ sql_reserved_word: ("ABSOLUTE"i
 | "YEAR"i
 | "ZONE"i )
 
-_a: /[^A-Z0-9_]/
+_A: /[^A-Z0-9_]/
 
 udf_prefix: "ivo_"i
 
